@@ -1,0 +1,88 @@
+<ion-content>
+  <ion-toolbar>
+    <ion-segment>
+      <ion-segment-button value="pizzas">
+        Pizzas
+      </ion-segment-button>
+      <ion-segment-button value="bebidas">
+        Bebidas
+      </ion-segment-button>
+      <ion-segment-button value="acompanamientos">
+        Acompañamientos
+      </ion-segment-button>
+    </ion-segment>
+  </ion-toolbar>
+  <ion-grid>
+    <ion-row>
+      <ion-col size="6">
+        <ion-card button>
+          <ion-card-content class="ion-text-center">
+            <ion-img src="assets/img-6.jpg"></ion-img>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+      <ion-col size="6">
+        <ion-card button>
+          <ion-card-content class="ion-text-center">
+            <ion-img src="assets/img-3.jpg"></ion-img>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col size="6">
+        <ion-card button>
+          <ion-card-content class="ion-text-center">
+            <ion-img src="assets/img-4.jpg"></ion-img>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+      <ion-col size="6">
+        <ion-card button color="warning">
+          <ion-card-content class="ion-text-center">
+            <ion-img src="assets/img-5.jpg"></ion-img>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col size="6">
+        <ion-card button>
+          <ion-card-content class="ion-text-center">
+            <ion-img src="assets/pizza-hawaiana.jpg"></ion-img>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+      <ion-col size="6">
+        <ion-card button>
+          <ion-card-content class="ion-text-center">
+            <ion-img src="assets/pizza-salmon-ahumado.jpg"></ion-img>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <ion-tabs>
+    <ion-tab-bar slot="bottom">
+      <ion-tab-button tab="home">
+        <ion-icon name="pizza"></ion-icon>
+        Menu
+      </ion-tab-button>
+      <ion-tab-button tab="cart">
+        <ion-icon name="cart-outline"></ion-icon>
+        Carrito
+      </ion-tab-button>
+      <ion-tab-button tab="receipt">
+        <ion-icon name="receipt-outline"></ion-icon>
+        pedidos
+      </ion-tab-button>
+      <ion-tab-button tab="profile" [routerLink]="['/login']">
+        <ion-icon name="person-outline"></ion-icon>
+        Perfil
+      </ion-tab-button>
+    </ion-tab-bar>
+  </ion-tabs>
+</ion-content>

@@ -1,0 +1,220 @@
+/* Estilo global para el ion-content */
+ion-content {
+  --background: hsl(135, 73%, 53%); /* Color de fondo */
+  position: relative; /* Necesario para el posicionamiento del texto */
+  padding-top: 10%; /* Espacio en la parte superior para el brand-text */
+}
+
+/* Estilo del texto de marca */
+.brand-text {
+  position: absolute; /* Asegura que el texto esté en el lugar correcto */
+  top: 10%; /* Ajusta la posición vertical del texto */
+  left: 50%;
+  transform: translateX(-50%); /* Centra horizontalmente */
+  font-size: 3rem; /* Tamaño grande del texto */
+  color: red; /* Color rojo */
+  font-weight: bold; /* Opcional: negrita para mayor visibilidad */
+  text-align: center;
+  z-index: 1; /* Asegura que el texto esté encima del contenido */
+  width: 100%; /* Asegura que el texto se extienda horizontalmente */
+  padding: 0 15px; /* Padding horizontal para mejor visibilidad en pantallas pequeñas */
+}
+
+/* Estilo de la sección de login */
+.login-section {
+  position: relative; /* Para el posicionamiento dentro de ion-content */
+  top: 10%; /* Ajusta para que no se sobreponga con el brand-text */
+  height: auto; /* Ajusta la altura automáticamente */
+  width: 90%; /* Ajusta el ancho para pantallas más pequeñas */
+  max-width: 800px; /* Limita el ancho máximo */
+  background: #fff; /* Fondo blanco para toda la sección de login */
+  margin: 20px auto; /* Centra la sección horizontalmente con margen */
+  border-radius: 46px; /* Radio de borde para esquinas redondeadas */
+  padding: 20px; /* Espaciado interno */
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1); /* Agrega sombra para mejor visibilidad */
+}
+
+/* Estilo de los encabezados */
+.heading {
+  margin-top: 20px;
+}
+
+.heading h1 {
+  font-size: 1.6rem; /* Tamaño del texto */
+  font-weight: bolder;
+  color: #000; /* Texto de color negro */
+  text-align: center; /* Centra el texto */
+}
+
+.heading p {
+  margin-top: 26px;
+  font-size: 1rem; /* Tamaño del texto */
+  color: #7b7b7b;
+  text-align: center; /* Centra el texto */
+}
+
+/* Estilo del formulario de login */
+.login-form {
+  margin-top: 20px; /* Espacio superior */
+}
+
+.form-input {
+  position: relative;
+  margin-bottom: 15px; /* Espacio inferior */
+}
+
+/* Estilo de ion-item */
+ion-item {
+  --background: #fff; /* Fondo blanco para cada item del formulario */
+  --color: #000; /* Texto de color negro */
+  margin-bottom: 10px; /* Espacio inferior para cada item */
+  position: relative; /* Para el posicionamiento del ícono y etiqueta */
+  padding-left: 50px; /* Espacio para el ícono */
+}
+
+/* Ajuste de los íconos */
+ion-icon {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 1.2rem; /* Tamaño del ícono */
+  left: 10px; /* Espacio desde el borde izquierdo */
+  color: #000; /* Iconos de color negro */
+  z-index: 2; /* Asegura que el ícono esté encima del input */
+}
+
+/* Ajuste de las etiquetas */
+ion-label {
+  font-weight: bolder;
+  font-size: 0.8rem;
+  color: #000; /* Etiquetas de color negro */
+}
+
+/* Ajuste del input */
+ion-input {
+  font-size: 0.9rem;
+  --padding-start: 50px; /* Espacio desde el borde izquierdo para el ícono */
+  --padding-top: 10px; /* Ajusta el padding vertical */
+  color: #000; /* Texto de color negro en los inputs */
+}
+
+/* Estilo de los botones de acción */
+.action-buttons {
+  text-align: center;
+  margin-top: 20px; /* Espacio superior */
+}
+
+.login-button,
+.signup-button {
+  width: 100%;
+  font-weight: bold;
+  margin-top: 10px; /* Espacio superior entre botones */
+}
+
+.login-button {
+  --background: #f90101;
+  color: #fff; /* Texto blanco en el botón de inicio de sesión */
+}
+
+.invited-button {
+  width: 100%;
+  font-weight: bold;
+  color: #fff;
+}
+
+p {
+  margin-top: 15px;
+  color: #7b7b7b;
+}
+
+/* Estilo del botón de registro */
+.signup-button {
+  --border-color: #b4b4b4;
+  --color: #000;
+  margin-top: 30px;
+}
+
+
+.error-message {
+  color: red; 
+  font-size: 0.875rem; 
+  margin-top: 0.25rem; 
+}
+
+/* Consultas de medios para pantallas más pequeñas */
+@media (max-width: 768px) {
+  .brand-text {
+    font-size: 6vw; /* Ajusta el tamaño del texto para pantallas más pequeñas */
+    top: 15%; /* Ajusta la posición vertical para pantallas más pequeñas */
+  }
+
+  .login-section {
+    width: 95%; /* Ajusta el ancho para pantallas más pequeñas */
+    margin: 10px auto; /* Reduce el margen en pantallas más pequeñas */
+  }
+
+  .heading h1 {
+    font-size: 1.3rem; /* Ajusta el tamaño del texto para pantallas más pequeñas */
+  }
+
+  .heading p {
+    font-size: 0.9rem; /* Ajusta el tamaño del texto para pantallas más pequeñas */
+  }
+
+  ion-icon {
+    font-size: 1rem; /* Ajusta el tamaño del ícono para pantallas más pequeñas */
+  }
+
+  ion-label {
+    font-size: 0.8rem; /* Ajusta el tamaño de la etiqueta para pantallas más pequeñas */
+  }
+
+  ion-input {
+    font-size: 0.8rem; /* Ajusta el tamaño del texto en el input para pantallas más pequeñas */
+  }
+
+  .login-button,
+  .invited-button,
+  .signup-button {
+    font-size: 0.9rem; /* Ajusta el tamaño del texto en los botones para pantallas más pequeñas */
+  }
+}
+
+/* Consultas de medios para pantallas muy pequeñas */
+@media (max-width: 375px) {
+  .brand-text {
+    font-size: 5vw; /* Ajusta el tamaño del texto para pantallas muy pequeñas */
+    top: 20%; /* Ajusta la posición vertical para pantallas muy pequeñas */
+  }
+
+  .login-section {
+    width: 95%; /* Ajusta el ancho para pantallas muy pequeñas */
+    padding: 15px; /* Ajusta el padding para pantallas muy pequeñas */
+  }
+
+  .heading h1 {
+    font-size: 1.2rem; /* Ajusta el tamaño del texto para pantallas muy pequeñas */
+  }
+
+  .heading p {
+    font-size: 0.8rem; /* Ajusta el tamaño del texto para pantallas muy pequeñas */
+  }
+
+  ion-icon {
+    font-size: 0.9rem; /* Ajusta el tamaño del ícono para pantallas muy pequeñas */
+  }
+
+  ion-label {
+    font-size: 0.7rem; /* Ajusta el tamaño de la etiqueta para pantallas muy pequeñas */
+  }
+
+  ion-input {
+    font-size: 0.7rem; /* Ajusta el tamaño del texto en el input para pantallas muy pequeñas */
+  }
+
+  .login-button,
+  .invited-button,
+  .signup-button {
+    font-size: 0.8rem; /* Ajusta el tamaño del texto en los botones para pantallas muy pequeñas */
+  }
+}

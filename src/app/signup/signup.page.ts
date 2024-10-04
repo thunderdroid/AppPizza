@@ -11,13 +11,13 @@ import { AlertController, LoadingController } from '@ionic/angular';
 export class SignupPage implements OnInit {
 
   signupForm: FormGroup;
-  isLoading = false; // Variable de estado para controlar la pantalla de carga
+  isLoading = false; 
 
   constructor(
     private formBuilder: FormBuilder, 
     private router: Router, 
     private alertController: AlertController,
-    private loadingController: LoadingController // Loading controller para manejar la pantalla de carga
+    private loadingController: LoadingController
   ) {
     this.signupForm = this.formBuilder.group({
       name: ['', [Validators.required, Validators.pattern('^[a-zA-ZÀ-ÿ\u00f1\u00d1 ]+$')]],
@@ -80,6 +80,6 @@ export class SignupPage implements OnInit {
       this.isLoading = false; 
       await loading.dismiss(); 
       this.router.navigate(['/menu']); 
-    }, 3000); 
+    }, 1000); 
   }
 }

@@ -1,35 +1,102 @@
-/* Estilo global para el ion-content */
 ion-content {
-    --background: #fff; /* Fondo blanco para el contenido */
+  overflow-y: auto;
+  --background: #fff;
+}
+
+ion-tabs {
+  height: 210%;
+
+
+
+
+}
+
+ion-tab-bar {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  z-index: 10;
+  --background: #fff;
+  --color: #000;
+  --color-selected: #f90101;
+  --border-color: #ccc;
+
+}
+
+
+ion-tab-button {
+  --background: #fff;
+  --color: #000;
+
+}
+
+
+
+
+ion-icon {
+  color: #000;
+
+}
+
+ion-card {
+  width: 100%;
+  max-width: 300px;
+  margin: 10px auto;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+
+}
+
+ion-card-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 10px;
+
+}
+
+ion-img {
+  width: 100%;
+  height: 200px;
+  border-radius: 8px;
+  margin-bottom: 10px;
+  object-fit: cover;
+
+}
+
+h2 {
+  font-size: 1.2rem;
+  margin: 5px 0;
+  text-align: center;
+}
+
+p {
+  font-size: 1rem;
+  color: #666;
+  margin: 0;
+  text-align: center;
+}
+
+@media (min-width: 576px) {
+  ion-card {
+      max-width: 250px;
+      margin: 10px;
+
   }
-  
-  /* Estilo para la barra de pestañas */
-  ion-tab-bar {
-    --background: #fff; /* Fondo blanco para la barra de pestañas */
-    --color: #000; /* Color de texto negro para los botones */
-    --color-selected: #f90101; /* Color de texto seleccionado (puedes cambiarlo según el diseño) */
-    --border-color: #ccc; /* Color del borde (si se aplica) */
-  }
-  
-  /* Estilo para los botones de la barra de pestañas */
-  ion-tab-button {
-    --background: #fff; /* Fondo blanco para los botones de la barra de pestañas */
-    --color: #000; /* Color de texto negro para los botones */
-  }
-  
-  /* Estilo para los íconos dentro de los botones */
-  ion-icon {
-    color: #000; /* Color de los íconos (puedes ajustar el color según tu diseño) */
+}
+
+@media (min-width: 768px) {
+  ion-card {
+      max-width: 220px;
+      height: auto;
+
   }
 
-  ion-card {
-    max-width: 300px; /* Ajusta el ancho máximo de la tarjeta */
-  }
-  
   ion-img {
-    width: 100%; /* Asegura que la imagen se ajuste al ancho de la tarjeta */
-    height: auto; /* Mantiene la proporción original de la imagen */
-    border-radius: 8px; /* Opcional: redondea las esquinas de la imagen */
-    margin-bottom: 10px; /* Espacio entre la imagen y el contenido de la tarjeta */
+      height: 180px;
+
   }
-  
+}

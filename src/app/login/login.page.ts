@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { LoadingController } from '@ionic/angular'; // Importar LoadingController
-
+import { LoadingController } from '@ionic/angular'; 
 @Component({
   selector: 'app-login',
   templateUrl: './login.page.html',
@@ -57,12 +56,17 @@ export class LoginPage implements OnInit {
       this.isLoading = false;
       await loading.dismiss(); 
       this.router.navigate(['/menu']); 
-    }, 3000);
+    }, 1000);
   }
 
   
   async continueAsGuest() {
     await this.showLoading();
+  }
+
+  // flag para quitar el ingresado.
+  async olvidar() {
+    localStorage.removeItem("ingresado");
   }
 }
 

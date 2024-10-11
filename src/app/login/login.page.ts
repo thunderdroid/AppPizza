@@ -11,11 +11,13 @@ export class LoginPage implements OnInit {
 
   loginForm: FormGroup;
   isLoading = false; 
+  alertController: any;
 
   constructor(
     private formBuilder: FormBuilder, 
     private router: Router,
-    private loadingController: LoadingController
+    private loadingController: LoadingController,
+    private navCtrl: NavController,
   ) {
     this.loginForm = this.formBuilder.group({
       email: ['', [Validators.required, Validators.email]],
@@ -64,10 +66,29 @@ export class LoginPage implements OnInit {
     await this.showLoading();
   }
 
+  // flag para ingresar al inicio
+  async ingresar() {
+    var f = this.loginForm.value;
+
+    var usuario = JSON.parse(localStorage.getItem('usuario'));
+
+    if(usuario.correo == f.correo && usuario.password == f.password){
+      console.log('Ingresado');
+      localStorage.setItem('ingresado','true');
+      this.navCtrl.navigateRoot('menu');
+    }else{
+      const alert = await this.alertController.create({
+        header: 'Datos Incorrectos',
+        message: 'Los datos que ingresaste estan incorrectos o vacios',
+        button: ['Aceptar']
+      });
+    }
+  }
+
   // flag para quitar el ingresado.
   async olvidar() {
     localStorage.removeItem("ingresado");
-  }
+  }//
 }
 
 

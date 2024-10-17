@@ -1,7 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 import { CanActivateFn } from '@angular/router';
 
-import { noauthLocalGuard } from './noauthlocal.guard';
+import { noauthLocalGuard } from './noauth-local.guard';
 
 describe('noauthLocalGuard', () => {
   const executeGuard: CanActivateFn = (...guardParameters) => 

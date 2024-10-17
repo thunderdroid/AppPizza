@@ -4,7 +4,7 @@ ion-content {
 }
 
 ion-tabs {
-  height: 210%;
+  height: 260%;
 
 
 
@@ -80,6 +80,14 @@ p {
   text-align: center;
 }
 
+.add-to-cart-button {
+  font-size: 1.2rem;
+  margin-top: 10px;
+  --padding-start: 0;
+  --padding-end: 0;
+  width: 100%;
+}
+
 @media (min-width: 576px) {
   ion-card {
       max-width: 250px;
@@ -93,6 +101,18 @@ p {
       max-width: 220px;
       height: auto;
 
+  }
+
+  @media (max-width: 768px) {
+    .add-to-cart-button {
+      font-size: 1rem;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .add-to-cart-button {
+      font-size: 0.9rem;
+    }
   }
 
   ion-img {

@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { ApiService } from '../service/api.service';
 
 @Component({
   selector: 'app-home',
@@ -7,6 +8,18 @@ import { Component } from '@angular/core';
 })
 export class HomePage {
 
-  constructor() {}
+  data: any[] = [];
+
+  constructor(private apiService: ApiService) {}
+
+  ngOnInit(): void {
+    this.llenarData();
+  }
+
+  llenarData() {
+    this.apiService.getData().subscribe( data => {
+      this.data = data;
+    })
+  }
 
 }

@@ -1,0 +1,57 @@
+.full-screen-container {
+  display: flex;
+  flex-direction: column; /* Mantiene la dirección vertical */
+  justify-content: flex-start; /* Cambiado para alinear el contenido hacia arriba */
+  align-items: center;
+  height: 100vh; /* Ocupa toda la altura de la pantalla */
+  width: 100vw; /* Ocupa toda la anchura de la pantalla */
+  background-color: rgba(255, 255, 255, 0.9); /* Fondo blanco con opacidad */
+  padding: 20px; /* Espaciado interno */
+}
+
+.pedido-titulo {
+  color: black; /* Color negro para el título */
+  font-size: 1.5rem; /* Ajusta el tamaño de la fuente según tus necesidades */
+  margin-bottom: 10px; /* Espaciado debajo del título reducido */
+}
+
+ion-segment {
+  --background: transparent; /* Fondo transparente para el ion-segment */
+}
+
+ion-segment-button {
+  --color: green; /* Color de texto verde por defecto */
+  --background: transparent; /* Fondo transparente por defecto */
+}
+
+ion-segment-button[aria-checked="true"] {
+  --background: rgba(50, 205, 50, 0.8); /* Fondo verde lima cuando se selecciona */
+  --color: white; /* Cambiar el color del texto a blanco cuando se selecciona */
+}
+
+ion-segment-button:not([aria-checked="true"]) {
+  --background: transparent; /* Fondo transparente cuando no está seleccionado */
+}
+
+
+.search-container {
+  margin-top: 20px; /* Espaciado superior para separar de los segmentos */
+}
+
+.custom-searchbar {
+  --background: transparent; /* Fondo transparente */
+  --color: green; /* Color de texto de la barra de búsqueda */
+  border: 1px solid green; /* Borde verde */
+  border-radius: 20px; /* Bordes redondeados */
+}
+
+.location-icon {
+  color: green; /* Color verde para el ícono de localización */
+}
+
+
+
+
+
+
+

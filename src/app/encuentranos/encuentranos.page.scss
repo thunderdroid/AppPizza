@@ -1,0 +1,21 @@
+.full-map {
+    --background: #fff; /* Fondo blanco */
+    height: 100%; /* Asegura que el ion-content ocupe el 100% de la pantalla */
+    padding: 0; /* Sin padding alrededor del contenido */
+  }
+  
+  #map {
+    width: 100%; /* Ocupa el 100% del ancho */
+    height: 100vh; /* Ocupa el 100% de la altura de la ventana */
+    position: absolute; /* Asegura que el mapa esté posicionado de manera absoluta */
+    top: 0; /* Alinea al borde superior */
+    left: 0; /* Alinea al borde izquierdo */
+
+    .back-button {
+        position: absolute; /* Posiciona el botón de regreso de manera absoluta */
+        top: 10px; /* Distancia desde la parte superior */
+        left: 10px; /* Distancia desde la izquierda */
+        z-index: 10; /* Asegura que el botón esté encima del mapa */
+      }
+  }
+  

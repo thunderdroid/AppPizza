@@ -1,4 +1,17 @@
 <ion-content>
+  <ion-header>
+    <ion-toolbar> <!-- Establecer el fondo blanco -->
+      <ion-buttons slot="start">
+        <ion-button (click)="openLocationModal()">
+          <ion-icon name="location-outline" style="color: green;"></ion-icon> <!-- Ícono de localización azul -->
+        </ion-button>
+      </ion-buttons>
+      <ion-title style="margin-left: -90px;"> <!-- Reducir espacio a la izquierda del título -->
+        <span style="font-size: 1rem; text-align: left;">Agregar dirección</span> <!-- Texto alineado a la izquierda y tamaño ajustado -->
+      </ion-title>
+    </ion-toolbar>
+  </ion-header>
+
   <ion-toolbar>
     <ion-segment (ionChange)="onSegmentChange($event)">
       <ion-segment-button value="pizzas">
@@ -12,8 +25,91 @@
       </ion-segment-button>
     </ion-segment>
   </ion-toolbar>
+  <ion-grid>
+    <ion-row>
+      <ion-col size="6">
+        <ion-card button color="warning" class="hover-zoom">
+          <ion-card-content class="ion-text-center">
+            <ion-img src="assets/img-6.jpg"></ion-img>
+            <h2>Pizza Margarita</h2>
+            <p>$12.000</p>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+      <ion-col size="6">
+        <ion-card button color="warning" class="hover-zoom">
+          <ion-card-content class="ion-text-center">
+            <ion-img src="assets/img-3.jpg"></ion-img>
+            <h2>Pizza Pepperoni</h2>
+            <p>$14.000</p>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
   
+    <ion-row>
+      <ion-col size="6">
+        <ion-card button color="warning" class="hover-zoom">
+          <ion-card-content class="ion-text-center">
+            <ion-img src="assets/img-4.jpg"></ion-img>
+            <h2>Pizza BBQ</h2>
+            <p>$16.000</p>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+      <ion-col size="6">
+        <ion-card button color="warning" class="hover-zoom">
+          <ion-card-content class="ion-text-center">
+            <ion-img src="assets/img-5.jpg"></ion-img>
+            <h2>Pizza 4 Quesos</h2>
+            <p>$15.000</p>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
   
+    <ion-row>
+      <ion-col size="6">
+        <ion-card button color="warning" class="hover-zoom">
+          <ion-card-content class="ion-text-center">
+            <ion-img src="assets/pizza-hawaiana.jpg"></ion-img>
+            <h2>Pizza Hawaiana</h2>
+            <p>$13.000</p>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+      <ion-col size="6">
+        <ion-card button color="warning" class="hover-zoom">
+          <ion-card-content class="ion-text-center">
+            <ion-img src="assets/pizza-salmon-ahumado.jpg"></ion-img>
+            <h2>Pizza Salmón Ahumado</h2>
+            <p>$18.000</p>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  
+    <ion-row>
+      <ion-col size="6">
+        <ion-card button color="warning" class="hover-zoom">
+          <ion-card-content class="ion-text-center">
+            <ion-img src="assets/img/pizza canadian bacon.jpg"></ion-img>
+            <h2>Pizza Canadian Bacon</h2>
+            <p>$13.000</p>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+      <ion-col size="6">
+        <ion-card button color="warning" class="hover-zoom">
+          <ion-card-content class="ion-text-center">
+            <ion-img src="assets/img/marinara.jpg"></ion-img>
+            <h2>Pizza Salsa Marinara</h2>
+            <p>$18.000</p>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
   
 
   <ion-tabs>
@@ -22,7 +118,7 @@
         <ion-icon name="pizza"></ion-icon>
         Menu
       </ion-tab-button>
-      <ion-tab-button [routerLink]="['/cart']">
+      <ion-tab-button tab="cart">
         <ion-icon name="cart-outline"></ion-icon>
         Carrito
       </ion-tab-button>
@@ -30,10 +126,10 @@
         <ion-icon name="receipt-outline"></ion-icon>
         pedidos
       </ion-tab-button>
-      <ion-tab-button tab="profile" [routerLink]="['/login']">
+      <ion-tab-button tab="profile" [routerLink]="['/profile']">
         <ion-icon name="person-outline"></ion-icon>
         Perfil
-      </ion-tab-button>
+    </ion-tab-button>
     </ion-tab-bar>
   </ion-tabs>
 </ion-content>

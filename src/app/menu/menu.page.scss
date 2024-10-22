@@ -1,14 +1,10 @@
 ion-content {
   overflow-y: auto;
-  --background: #fff;
+  --background: #fff; /* Asegúrate de que el fondo sea blanco */
 }
 
 ion-tabs {
-  height: 260%;
-
-
-
-
+  height: 229%;
 }
 
 ion-tab-bar {
@@ -16,26 +12,19 @@ ion-tab-bar {
   bottom: 0;
   width: 100%;
   z-index: 10;
-  --background: #fff;
+  --background: #fff; /* Fondo blanco para el tab bar */
   --color: #000;
   --color-selected: #f90101;
   --border-color: #ccc;
-
 }
-
 
 ion-tab-button {
-  --background: #fff;
+  --background: #fff; /* Fondo blanco para los botones del tab */
   --color: #000;
-
 }
-
-
-
 
 ion-icon {
   color: #000;
-
 }
 
 ion-card {
@@ -47,7 +36,6 @@ ion-card {
   flex-direction: column;
   justify-content: space-between;
   height: 100%;
-
 }
 
 ion-card-content {
@@ -55,7 +43,6 @@ ion-card-content {
   flex-direction: column;
   align-items: center;
   padding: 10px;
-
 }
 
 ion-img {
@@ -64,7 +51,6 @@ ion-img {
   border-radius: 8px;
   margin-bottom: 10px;
   object-fit: cover;
-
 }
 
 h2 {
@@ -80,43 +66,39 @@ p {
   text-align: center;
 }
 
-.add-to-cart-button {
-  font-size: 1.2rem;
-  margin-top: 10px;
-  --padding-start: 0;
-  --padding-end: 0;
-  width: 100%;
-}
-
 @media (min-width: 576px) {
   ion-card {
-      max-width: 250px;
-      margin: 10px;
-
+    max-width: 250px;
+    margin: 10px;
   }
 }
 
 @media (min-width: 768px) {
   ion-card {
-      max-width: 220px;
-      height: auto;
-
-  }
-
-  @media (max-width: 768px) {
-    .add-to-cart-button {
-      font-size: 1rem;
-    }
-  }
-  
-  @media (max-width: 480px) {
-    .add-to-cart-button {
-      font-size: 0.9rem;
-    }
+    max-width: 220px;
+    height: auto;
   }
 
   ion-img {
-      height: 180px;
-
+    height: 180px;
   }
+}
+
+/* Nuevas reglas agregadas */
+ion-toolbar {
+  --background: rgb(9, 95, 19);
+  height: 80px; /* Aumentar la altura del toolbar */
+}
+
+ion-title {
+  display: flex;
+  flex-direction: column; /* Alinear el texto verticalmente */
+  align-items: flex-start; /* Alinear el contenido a la izquierda */
+  margin-left: 5px; /* Reducir margen a la izquierda para acercar el título al ícono */
+  font-size: 1.2rem; /* Ajustar el tamaño de la fuente */
+  line-height: 1.1; /* Ajustar el espacio entre líneas */
+}
+
+ion-button {
+  --padding-start: 0; /* Eliminar el padding a la izquierda */
 }

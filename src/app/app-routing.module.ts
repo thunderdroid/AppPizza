@@ -39,6 +39,10 @@ const routes: Routes = [
     path: 'encuentranos',
     loadChildren: () => import('./encuentranos/encuentranos.module').then( m => m.EncuentranosPageModule)
   },
+  {
+    path: 'carrito',
+    loadChildren: () => import('./carrito/carrito.module').then( m => m.CarritoPageModule)
+  },
   
 ];
 

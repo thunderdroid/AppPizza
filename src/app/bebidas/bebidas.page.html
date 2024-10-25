@@ -1,5 +1,21 @@
 <ion-content>
+  <ion-header>
+    <ion-toolbar> 
+      <ion-buttons slot="start">
+        <ion-button (click)="openLocationModal()">
+          <ion-icon name="location-outline" style="color: green;"></ion-icon> 
+          <span class="location-text">{{ selectedAddress }}</span> 
+        </ion-button>
+      </ion-buttons>
+      <ion-buttons slot="end">
+        <ion-button (click)="openCartModal()">
+          <ion-icon name="cart-outline"></ion-icon> 
+        </ion-button>
+      </ion-buttons>
+    </ion-toolbar>
+  </ion-header>
   <ion-toolbar>
+
     <ion-segment (ionChange)="onSegmentChange($event)">
       <ion-segment-button value="pizzas">
         Pizzas
@@ -13,68 +29,78 @@
     </ion-segment>
   </ion-toolbar>
 <ion-grid>
-    <ion-row>
-      <ion-col size="6">
-        <ion-card button color="warning">
-          <ion-card-content class="ion-text-center">
-            <ion-img src="assets/img/bebidas/coca cola.jpg"></ion-img>
-            <h2>Coca-Cola</h2>
-            <p>$1.990</p>
-          </ion-card-content>
-        </ion-card>
-      </ion-col>
-      <ion-col size="6">
-        <ion-card button color="warning">
-          <ion-card-content class="ion-text-center">
-            <ion-img src="assets/img/bebidas/coca-cola zero1.png"></ion-img>
-            <h2>Coca-Cola Zero</h2>
-            <p>$1.990</p>
-          </ion-card-content>
-        </ion-card>
-      </ion-col>
-    </ion-row>
-    
-    <ion-row>
-      <ion-col size="6">
-        <ion-card button color="warning">
-          <ion-card-content class="ion-text-center">
-            <ion-img src="assets/img/bebidas/Cocalight.jpg"></ion-img>
-            <h2>Coca-light</h2>
-            <p>$1.990</p>
-          </ion-card-content>
-        </ion-card>
-      </ion-col>
-      <ion-col size="6">
-        <ion-card button color="warning">
-          <ion-card-content class="ion-text-center">
-            <ion-img src="assets/img/bebidas/fanta1.jpg"></ion-img>
-            <h2>Fanta</h2>
-            <p>$1.990</p>
-          </ion-card-content>
-        </ion-card>
-      </ion-col>
-    </ion-row>
-    
-    <ion-row>
-      <ion-col size="6">
-        <ion-card button color="warning">
-          <ion-card-content class="ion-text-center">
-            <ion-img src="assets/img/bebidas/sprite.jpg"></ion-img>
-            <h2>Sprite</h2>
-            <p>$1.990</p>
-          </ion-card-content>
-        </ion-card>
-      </ion-col>
-      <ion-col size="6">
-        <ion-card button color="warning">
-          <ion-card-content class="ion-text-center">
-            <ion-img src="assets/img/bebidas/sprite-zero.jpg"></ion-img>
-            <h2>Sprite-zero</h2>
-            <p>$1.990</p>
-          </ion-card-content>
-        </ion-card>
-      </ion-col>
-    </ion-row>
+  <ion-row>
+    <ion-col size="6">
+      <ion-card button color="warning">
+        <ion-card-content class="ion-text-center">
+          <ion-img src="assets/img/bebidas/coca cola.jpg"></ion-img>
+          <h2>Coca-Cola</h2>
+          <p>$1.990</p>
+          <ion-icon name="cart-outline" color="success" style="font-size: 24px;" (click)="addToCart('Coca-Cola', 1990, 'assets/img/bebidas/coca cola.jpg')"></ion-icon>
+        </ion-card-content>
+      </ion-card>
+    </ion-col>
+  
+    <ion-col size="6">
+      <ion-card button color="warning">
+        <ion-card-content class="ion-text-center">
+          <ion-img src="assets/img/bebidas/coca-cola zero1.png"></ion-img>
+          <h2>Coca-Cola Zero</h2>
+          <p>$1.990</p>
+          <ion-icon name="cart-outline" color="success" style="font-size: 24px;" (click)="addToCart('Coca-Cola Zero', 1990, 'assets/img/bebidas/coca-cola zero1.png')"></ion-icon>
+        </ion-card-content>
+      </ion-card>
+    </ion-col>
+  </ion-row>
+  
+  <ion-row>
+    <ion-col size="6">
+      <ion-card button color="warning">
+        <ion-card-content class="ion-text-center">
+          <ion-img src="assets/img/bebidas/Cocalight.jpg"></ion-img>
+          <h2>Coca-light</h2>
+          <p>$1.990</p>
+          <ion-icon name="cart-outline" color="success" style="font-size: 24px;" (click)="addToCart('Coca-light', 1990, 'assets/img/bebidas/Cocalight.jpg')"></ion-icon>
+        </ion-card-content>
+      </ion-card>
+    </ion-col>
+  
+    <ion-col size="6">
+      <ion-card button color="warning">
+        <ion-card-content class="ion-text-center">
+          <ion-img src="assets/img/bebidas/fanta1.jpg"></ion-img>
+          <h2>Fanta</h2>
+          <p>$1.990</p>
+          <ion-icon name="cart-outline" color="success" style="font-size: 24px;" (click)="addToCart('Fanta', 1990, 'assets/img/bebidas/fanta1.jpg')"></ion-icon>
+        </ion-card-content>
+      </ion-card>
+    </ion-col>
+  </ion-row>
+  
+  <ion-row>
+    <ion-col size="6">
+      <ion-card button color="warning">
+        <ion-card-content class="ion-text-center">
+          <ion-img src="assets/img/bebidas/sprite.jpg"></ion-img>
+          <h2>Sprite</h2>
+          <p>$1.990</p>
+          <ion-icon name="cart-outline" color="success" style="font-size: 24px;" (click)="addToCart('Sprite', 1990, 'assets/img/bebidas/sprite.jpg')"></ion-icon>
+        </ion-card-content>
+      </ion-card>
+    </ion-col>
+  
+    <ion-col size="6">
+      <ion-card button color="warning">
+        <ion-card-content class="ion-text-center">
+          <ion-img src="assets/img/bebidas/sprite-zero.jpg"></ion-img>
+          <h2>Sprite-zero</h2>
+          <p>$1.990</p>
+          <ion-icon name="cart-outline" color="success" style="font-size: 24px;" (click)="addToCart('Sprite-zero', 1990, 'assets/img/bebidas/sprite-zero.jpg')"></ion-icon>
+        </ion-card-content>
+      </ion-card>
+    </ion-col>
+  </ion-row>
+  
   </ion-grid>
 
   <ion-tabs>
@@ -91,7 +117,7 @@
         <ion-icon name="receipt-outline"></ion-icon>
         pedidos
       </ion-tab-button>
-      <ion-tab-button tab="profile" [routerLink]="['/login']">
+      <ion-tab-button tab="profile" [routerLink]="['/profile']">
         <ion-icon name="person-outline"></ion-icon>
         Perfil
       </ion-tab-button>

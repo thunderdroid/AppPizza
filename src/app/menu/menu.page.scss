@@ -4,7 +4,7 @@ ion-content {
 }
 
 ion-tabs {
-  height: 229%;
+  height: 240%;
 }
 
 ion-tab-bar {
@@ -36,6 +36,7 @@ ion-card {
   flex-direction: column;
   justify-content: space-between;
   height: 100%;
+  z-index: 1; 
 }
 
 ion-card-content {
@@ -84,21 +85,57 @@ p {
   }
 }
 
+
+/* Reglas para pantallas más grandes */
+@media (min-width: 768px) {
+  ion-card {
+    max-width: 400px; /* Ancho máximo en pantallas más grandes */
+  }
+
+  ion-img {
+    height: 180px; /* Altura de la imagen para pantallas más grandes */
+  }
+}
+
+@media (min-width: 576px) {
+  ion-card {
+    max-width: 250px; /* Ancho máximo en pantallas más pequeñas */
+    margin: 10px;
+  }
+}
+
+
+
+
+
+
 /* Nuevas reglas agregadas */
 ion-toolbar {
-  --background: rgb(9, 95, 19);
+  --background: rgb(9, 95, 19); /* Cambiar el fondo a blanco */
   height: 80px; /* Aumentar la altura del toolbar */
 }
 
 ion-title {
   display: flex;
-  flex-direction: column; /* Alinear el texto verticalmente */
-  align-items: flex-start; /* Alinear el contenido a la izquierda */
-  margin-left: 5px; /* Reducir margen a la izquierda para acercar el título al ícono */
-  font-size: 1.2rem; /* Ajustar el tamaño de la fuente */
-  line-height: 1.1; /* Ajustar el espacio entre líneas */
+  flex-direction: column;
+  align-items: center; /* Centrar contenido */
+  font-size: 1.2rem;
+  line-height: 1.1;
+  margin: 0; /* Eliminar márgenes adicionales */
 }
 
 ion-button {
-  --padding-start: 0; /* Eliminar el padding a la izquierda */
+  --padding-start: 0;
 }
+
+.location-text {
+  font-size: 1rem;
+  color: black; /* Cambiar color del texto a negro */
+  text-align: left;
+  margin-top: 5px; /* Espacio entre el ícono y el texto */
+  width: 150px; /* Limitar el ancho máximo de la dirección */
+  white-space: nowrap; /* Evitar que el texto se divida en varias líneas */
+  overflow: hidden; /* Ocultar el desbordamiento del texto */
+  text-overflow: ellipsis; 
+}
+

@@ -1,5 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { ModalController } from '@ionic/angular';
+import { LocationModalComponent } from '../location-modal/location-modal.component'; // Asegúrate de que la ruta sea correcta
+import { CartModalComponent } from '../cart-modal/cart-modal.component';
+import { CartService } from '../services/cart.service';
 
 @Component({
   selector: 'app-acompanamientos',
@@ -7,11 +11,11 @@ import { Router } from '@angular/router';
   styleUrls: ['./acompanamientos.page.scss'],
 })
 export class AcompanamientosPage implements OnInit {
+  selectedAddress: string = 'Agregar dirección'; // Valor inicial del título
 
-  constructor(private router: Router) { }
+  constructor(private router: Router, private modalController: ModalController, private cartService: CartService) { }
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
   onSegmentChange(event: any) {
     const selectedValue = event.detail.value;
@@ -31,4 +35,36 @@ export class AcompanamientosPage implements OnInit {
     }
   }
 
+  async openLocationModal() {
+    const modal = await this.modalController.create({
+      component: LocationModalComponent,
+      cssClass: 'my-custom-class', 
+    });
+
+    await modal.present();
+
+
+    const { data } = await modal.onWillDismiss();
+
+   
+    if (data) {
+      this.selectedAddress = data; // Actualiza el texto con la dirección seleccionada
+    }
+  }
+
+  // Agregar productos al carrito usando el cartservice
+  addToCart(name: string, price: number, image: string) {
+    const product = { name, price, image };
+    this.cartService.addToCart(product);
+    console.log(`Agregado al carrito: ${name}, Precio: ${price}`);
+  }
+
+  // abre el  modal del carrito de compras.
+  async openCartModal() {
+    const modal = await this.modalController.create({
+      component: CartModalComponent,
+      componentProps: { cartItems: this.cartService.getCartItems() },
+    });
+    await modal.present();
+  }
 }

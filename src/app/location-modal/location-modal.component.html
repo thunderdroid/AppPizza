@@ -10,7 +10,7 @@
 <ion-content>
   <div class="full-screen-container">
     <h2 class="pedido-titulo">¿CÓMO QUIERES PEDIR?</h2>
-    <ion-segment>
+    <ion-segment [(ngModel)]="selectedSegment">
       <ion-segment-button value="delivery">
         <ion-label>DELIVERY</ion-label>
       </ion-segment-button>
@@ -38,5 +38,23 @@
         </ion-item>
       </ion-list>
     </div>
+
+    <!-- Mapa de Google -->
+    <div id="map" class="map-container"></div>
+
+    <ion-checkbox 
+  class="custom-checkbox" 
+  [(ngModel)]="saveAddress"></ion-checkbox>
+<span class="custom-label">Guardar dirección</span>
+    
+
   </div>
+
+  
+
+
+  <ion-button class="custom-bottom-button" expand="block" (click)="useSelectedAddress()">
+    Usar esta dirección
+  </ion-button>
 </ion-content>
+

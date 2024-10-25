@@ -1,4 +1,20 @@
 <ion-content>
+  <ion-header>
+    <ion-toolbar> <!-- Establecer el fondo blanco -->
+      <ion-buttons slot="start">
+        <ion-button (click)="openLocationModal()">
+          <ion-icon name="location-outline" style="color: green;"></ion-icon> 
+          <span class="location-text">{{ selectedAddress }}</span> 
+        </ion-button>
+      </ion-buttons>
+      <ion-buttons slot="end">
+        <ion-button (click)="openCartModal()">
+          <ion-icon name="cart-outline"></ion-icon> 
+        </ion-button>
+      </ion-buttons>
+    </ion-toolbar>
+  </ion-header>
+
   <ion-toolbar>
     <ion-segment (ionChange)="onSegmentChange($event)">
       <ion-segment-button value="pizzas">
@@ -13,68 +29,78 @@
     </ion-segment>
   </ion-toolbar>
 <ion-grid>
-    <ion-row>
-      <ion-col size="6">
-        <ion-card button color="warning">
-          <ion-card-content class="ion-text-center">
-            <ion-img src="assets/img/agregados/alitaspollo.jpg"></ion-img>
-            <h2>Alitas de Pollo</h2>
-            <p>$5.890</p>
-          </ion-card-content>
-        </ion-card>
-      </ion-col>
-      <ion-col size="6">
-        <ion-card button color="warning">
-          <ion-card-content class="ion-text-center">
-            <ion-img src="assets/img/agregados/palitos de queso.jpg"></ion-img>
-            <h2>Palitos de queso</h2>
-            <p>$5.690</p>
-          </ion-card-content>
-        </ion-card>
-      </ion-col>
-    </ion-row>
-    
-    <ion-row>
-      <ion-col size="6">
-        <ion-card button color="warning">
-          <ion-card-content class="ion-text-center">
-            <ion-img src="assets/img/agregados/img-3.png"></ion-img>
-            <h2>Rolls</h2>
-            <p>$4.890</p>
-          </ion-card-content>
-        </ion-card>
-      </ion-col>
-      <ion-col size="6">
-        <ion-card button color="warning">
-          <ion-card-content class="ion-text-center">
-            <ion-img src="assets/img/agregados/img-4.jpg"></ion-img>
-            <h2>Chicken Poppers</h2>
-            <p>$5.990</p>
-          </ion-card-content>
-        </ion-card>
-      </ion-col>
-    </ion-row>
-    
-    <ion-row>
-      <ion-col size="6">
-        <ion-card button color="warning">
-          <ion-card-content class="ion-text-center">
-            <ion-img src="assets/img/agregados/alitaspollo.jpg"></ion-img>
-            <h2>Sprite</h2>
-            <p>$4.290</p>
-          </ion-card-content>
-        </ion-card>
-      </ion-col>
-      <ion-col size="6">
-        <ion-card button color="warning">
-          <ion-card-content class="ion-text-center">
-            <ion-img src="assets/img/agregados/pappadia.jpeg"></ion-img>
-            <h2>Pappadia-Pollo BBQ</h2>
-            <p>$6.890</p>
-          </ion-card-content>
-        </ion-card>
-      </ion-col>
-    </ion-row>
+  <ion-row>
+    <ion-col size="6">
+      <ion-card button color="warning">
+        <ion-card-content class="ion-text-center">
+          <ion-img src="assets/img/agregados/alitaspollo.jpg"></ion-img>
+          <h2>Alitas de Pollo</h2>
+          <p>$5.890</p>
+          <ion-icon name="cart-outline" color="success" style="font-size: 24px;" (click)="addToCart('Alitas de Pollo', 5890, 'assets/img/agregados/alitaspollo.jpg')"></ion-icon>
+        </ion-card-content>
+      </ion-card>
+    </ion-col>
+  
+    <ion-col size="6">
+      <ion-card button color="warning">
+        <ion-card-content class="ion-text-center">
+          <ion-img src="assets/img/agregados/palitos de queso.jpg"></ion-img>
+          <h2>Palitos de queso</h2>
+          <p>$5.690</p>
+          <ion-icon name="cart-outline" color="success" style="font-size: 24px;" (click)="addToCart('Palitos de queso', 5690, 'assets/img/agregados/palitos de queso.jpg')"></ion-icon>
+        </ion-card-content>
+      </ion-card>
+    </ion-col>
+  </ion-row>
+  
+  <ion-row>
+    <ion-col size="6">
+      <ion-card button color="warning">
+        <ion-card-content class="ion-text-center">
+          <ion-img src="assets/img/agregados/img-3.png"></ion-img>
+          <h2>Rolls</h2>
+          <p>$4.890</p>
+          <ion-icon name="cart-outline" color="success" style="font-size: 24px;" (click)="addToCart('Rolls', 4890, 'assets/img/agregados/img-3.png')"></ion-icon>
+        </ion-card-content>
+      </ion-card>
+    </ion-col>
+  
+    <ion-col size="6">
+      <ion-card button color="warning">
+        <ion-card-content class="ion-text-center">
+          <ion-img src="assets/img/agregados/img-4.jpg"></ion-img>
+          <h2>Chicken Poppers</h2>
+          <p>$5.990</p>
+          <ion-icon name="cart-outline" color="success" style="font-size: 24px;" (click)="addToCart('Chicken Poppers', 5990, 'assets/img/agregados/img-4.jpg')"></ion-icon>
+        </ion-card-content>
+      </ion-card>
+    </ion-col>
+  </ion-row>
+  
+  <ion-row>
+    <ion-col size="6">
+      <ion-card button color="warning">
+        <ion-card-content class="ion-text-center">
+          <ion-img src="assets/img/agregados/alitaspollo.jpg"></ion-img>
+          <h2>Sprite</h2>
+          <p>$4.290</p>
+          <ion-icon name="cart-outline" color="success" style="font-size: 24px;" (click)="addToCart('Sprite', 4290, 'assets/img/agregados/alitaspollo.jpg')"></ion-icon>
+        </ion-card-content>
+      </ion-card>
+    </ion-col>
+  
+    <ion-col size="6">
+      <ion-card button color="warning">
+        <ion-card-content class="ion-text-center">
+          <ion-img src="assets/img/agregados/pappadia.jpeg"></ion-img>
+          <h2>Pappadia-Pollo BBQ</h2>
+          <p>$6.890</p>
+          <ion-icon name="cart-outline" color="success" style="font-size: 24px;" (click)="addToCart('Pappadia-Pollo BBQ', 6890, 'assets/img/agregados/pappadia.jpeg')"></ion-icon>
+        </ion-card-content>
+      </ion-card>
+    </ion-col>
+  </ion-row>
+  
   </ion-grid>
 
   <ion-tabs>
@@ -91,7 +117,7 @@
         <ion-icon name="receipt-outline"></ion-icon>
         pedidos
       </ion-tab-button>
-      <ion-tab-button tab="profile" [routerLink]="['/login']">
+      <ion-tab-button tab="profile" [routerLink]="['/profile']">
         <ion-icon name="person-outline"></ion-icon>
         Perfil
       </ion-tab-button>

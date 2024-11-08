@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { AuthService } from '../services/auth.service'; // Importar el servicio de autenticación
+import { AngularFireAuth } from '@angular/fire/compat/auth'; // Asegúrate de que esto esté correcto
 import { Router } from '@angular/router';
 import { LoadingController } from '@ionic/angular';
+import { AuthService } from '../services/auth.service'; // Si tienes un servicio de autenticación personalizado
 
 @Component({
   selector: 'app-login',
@@ -12,12 +13,14 @@ import { LoadingController } from '@ionic/angular';
 export class LoginPage implements OnInit {
   loginForm: FormGroup = this.fb.group({});
   isLoading = false;
+  errorMessage: string = ''; // Variable para almacenar el mensaje de error
 
   constructor(
     private fb: FormBuilder,
-    private authService: AuthService,
+    private afAuth: AngularFireAuth, // Usar AngularFireAuth para Firebase
     private router: Router,
-    private loadingController: LoadingController
+    private loadingController: LoadingController,
+    private authService: AuthService // Si necesitas este servicio
   ) {}
 
   ngOnInit() {
@@ -26,8 +29,8 @@ export class LoginPage implements OnInit {
       password: ['', Validators.required],
     });
 
-    // Cargar datos almacenados localmente
-    const storedUser = this.authService.getStoredUser();
+    // Cargar datos almacenados localmente si es necesario
+    const storedUser = this.authService.getStoredUser(); // Si tienes un método para obtener el usuario
     if (storedUser.email && storedUser.password) {
       this.loginForm.patchValue({
         email: storedUser.email,
@@ -40,15 +43,22 @@ export class LoginPage implements OnInit {
     if (this.loginForm.valid) {
       const { email, password } = this.loginForm.value;
       try {
+        this.isLoading = true;
         await this.showLoading(); // Mostrar cargando
 
-        // Guardar datos en local storage
+        // Intentar iniciar sesión con Firebase
+        await this.afAuth.signInWithEmailAndPassword(email, password);
+        
+        // Guardar datos en local storage si es necesario
         this.authService.setStoredUser(email, password);
-
+        
         // Redirigir al menú si el login es exitoso
         this.router.navigate(['/menu']);
       } catch (error) {
+        this.errorMessage = 'Correo o contraseña incorrectos.'; // Mensaje de error
         console.error('Error al iniciar sesión', error);
+      } finally {
+        this.isLoading = false; // Finaliza el estado de carga
       }
     } else {
       // Marcar los campos como "tocados" para mostrar los errores de validación
@@ -62,7 +72,6 @@ export class LoginPage implements OnInit {
   }
 
   async showLoading() {
-    this.isLoading = true;
     const loading = await this.loadingController.create({
       message: 'Cargando...',
       spinner: 'circles',
@@ -72,7 +81,6 @@ export class LoginPage implements OnInit {
 
     // Simular tiempo de carga
     setTimeout(async () => {
-      this.isLoading = false;
       await loading.dismiss(); // Cerrar el cargando
     }, 1000);
   }

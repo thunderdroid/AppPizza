@@ -1,6 +1,7 @@
-import { Component, OnInit, HostListener } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { Router } from '@angular/router';
+import { AuthService } from '../services/auth.service'; // Ajusta la ruta según tu estructura
 
 @Component({
   selector: 'app-profile',
@@ -10,7 +11,7 @@ import { Router } from '@angular/router';
 export class ProfilePage implements OnInit {
   userName: string | null = null; // Para almacenar el nombre del usuario
 
-  constructor(private afAuth: AngularFireAuth, private router: Router) { }
+  constructor(private afAuth: AngularFireAuth, private router: Router, private authService: AuthService) {}
 
   ngOnInit() {
     this.afAuth.authState.subscribe(user => {
@@ -22,15 +23,11 @@ export class ProfilePage implements OnInit {
     });
   }
 
-  @HostListener('click', ['$event'])
-  onClick(event: MouseEvent) {
-    console.log('Clicked:', event); // Para verificar el evento de clic
-  }
-
-  async signOut() {
-    console.log('Intentando cerrar sesión'); // Mensaje de prueba
-    await this.afAuth.signOut();
-    this.router.navigate(['/login']); // Redirigir a la página de inicio de sesión
+  // Método para cerrar sesión
+  async logout() {
+    await this.authService.logout();
+    this.router.navigate(['/login']); // Redirigir a la página de login
   }
 }
+
 

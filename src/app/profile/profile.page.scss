@@ -79,6 +79,8 @@ ion-content {
 .logout-section {
   text-align: center;
   margin-top: 20px;
+  position: relative; /* Asegúrate de que tenga posición relativa */
+  z-index: 10; /* Aumenta el z-index */
 }
 
 .logout-link {

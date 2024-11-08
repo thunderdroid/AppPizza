@@ -28,6 +28,11 @@
             <p class="error-message" *ngIf="loginForm.get('password')?.errors?.['required']">La contraseña es obligatoria.</p>
           </div>
         </div>
+        
+        <!-- Mensaje de error para autenticación -->
+        <div *ngIf="errorMessage" class="error-message" style="color: red;">
+          {{ errorMessage }}
+        </div>
       </div>
       <div class="action-buttons ion-padding">
         <ion-button class="login-button" size="large" type="submit">INICIAR SESIÓN</ion-button>
@@ -38,3 +43,4 @@
     </form>
   </div>
 </ion-content>
+

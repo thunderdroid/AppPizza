@@ -4,18 +4,29 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class AddressService {
-  private savedAddresses: string[] = []; 
+  private savedAddresses: string[] = []; // Lista de direcciones guardadas
+  private selectedAddress: string = ''; // Dirección seleccionada
 
-  constructor() { }
+  constructor() {}
 
+  // Guarda una nueva dirección en el array
   saveAddress(address: string) {
-    this.savedAddresses.push(address); // Agrega la dirección al array
+    this.savedAddresses.push(address);
   }
 
+  // Devuelve todas las direcciones guardadas
   getAddresses() {
-    return this.savedAddresses; // Devuelve las direcciones guardadas
+    return this.savedAddresses;
   }
 
+  // Establece una dirección seleccionada
+  setSelectedAddress(address: string) {
+    this.selectedAddress = address;
+  }
 
-  
+  // Obtiene la dirección seleccionada
+  getSelectedAddress() {
+    return this.selectedAddress;
+  }
 }
+

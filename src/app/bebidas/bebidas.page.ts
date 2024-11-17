@@ -4,6 +4,7 @@ import { ModalController } from '@ionic/angular';
 import { LocationModalComponent } from '../location-modal/location-modal.component'; // Asegúrate de que la ruta sea correcta
 import { CartModalComponent } from '../cart-modal/cart-modal.component';
 import { CartService } from '../services/cart.service';
+import { ProductsService } from '../services/products.service'; // Asegúrate de importar el servicio de productos
 
 @Component({
   selector: 'app-bebidas',
@@ -12,10 +13,19 @@ import { CartService } from '../services/cart.service';
 })
 export class BebidasPage implements OnInit {
   selectedAddress: string = 'Agregar dirección'; // Valor inicial del título
+  productos: any[] = [];  // Usamos un array simple sin un modelo definido
 
-  constructor(private router: Router, private modalController: ModalController, private cartService: CartService) { }
+  constructor(private router: Router, private modalController: ModalController, private cartService: CartService, private productsService: ProductsService ) { }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.cargarProductos('bebidas');
+  }
+
+  cargarProductos(categoria: string) {
+    this.productsService.obtenerProductos(categoria).subscribe((productos) => {
+      this.productos = productos;
+    });
+  }
 
   onSegmentChange(event: any) {
     const selectedValue = event.detail.value;

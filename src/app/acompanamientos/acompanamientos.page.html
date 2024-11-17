@@ -101,26 +101,49 @@
     </ion-col>
   </ion-row>
   
+  <ion-row>
+    <ion-col size="6">
+      <ion-card button color="warning">
+        <ion-card-content class="ion-text-center">
+          <ion-img src="assets/img/agregados/alitaspollo.jpg"></ion-img>
+          <h2>Sprite</h2>
+          <p>$4.290</p>
+          <ion-icon name="cart-outline" color="success" style="font-size: 24px;" (click)="addToCart('Sprite', 4290, 'assets/img/agregados/alitaspollo.jpg')"></ion-icon>
+        </ion-card-content>
+      </ion-card>
+    </ion-col>
+  
+    <ion-col size="6">
+      <ion-card button color="warning">
+        <ion-card-content class="ion-text-center">
+          <ion-img src="assets/img/agregados/pappadia.jpeg"></ion-img>
+          <h2>Pappadia-Pollo BBQ</h2>
+          <p>$6.890</p>
+          <ion-icon name="cart-outline" color="success" style="font-size: 24px;" (click)="addToCart('Pappadia-Pollo BBQ', 6890, 'assets/img/agregados/pappadia.jpeg')"></ion-icon>
+        </ion-card-content>
+      </ion-card>
+    </ion-col>
+  </ion-row> 
   </ion-grid>
-
-  <ion-tabs>
-    <ion-tab-bar slot="bottom">
-      <ion-tab-button tab="home">
-        <ion-icon name="pizza"></ion-icon>
-        Menu
-      </ion-tab-button>
-      <ion-tab-button tab="cart">
-        <ion-icon name="cart-outline"></ion-icon>
-        Carrito
-      </ion-tab-button>
-      <ion-tab-button tab="receipt">
-        <ion-icon name="receipt-outline"></ion-icon>
-        pedidos
-      </ion-tab-button>
-      <ion-tab-button tab="profile" [routerLink]="['/profile']">
-        <ion-icon name="person-outline"></ion-icon>
-        Perfil
-      </ion-tab-button>
-    </ion-tab-bar>
-  </ion-tabs>
 </ion-content>
+
+<ion-footer>
+  <ion-tab-bar slot="bottom">
+    <ion-tab-button tab="home" [routerLink]="['/menu']">
+      <ion-icon name="pizza"></ion-icon>
+      Menu
+    </ion-tab-button>
+    <ion-tab-button tab="cart">
+      <ion-icon name="cart-outline"></ion-icon>
+      Carrito
+    </ion-tab-button>
+    <ion-tab-button tab="receipt">
+      <ion-icon name="receipt-outline"></ion-icon>
+      Pedidos
+    </ion-tab-button>
+    <ion-tab-button tab="profile" [routerLink]="['/profile']">
+      <ion-icon name="person-outline"></ion-icon>
+      Perfil
+    </ion-tab-button>
+  </ion-tab-bar>
+</ion-footer>

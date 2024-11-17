@@ -50,15 +50,32 @@
       <ion-label>Encuéntranos</ion-label>
     </ion-item>
 
+    <div *ngIf="isAdmin">
+      <ion-item-divider class="section-divider">
+        <ion-label class="section-title">Admin</ion-label>
+      </ion-item-divider>
+
+      <ion-item class="separator-item" routerLink="/crud">
+        <ion-icon name="create-outline" slot="start"></ion-icon>
+        <ion-label>Crud</ion-label>
+      </ion-item>
+
+      <ion-item class="separator-item" routerLink="/users">
+        <ion-icon name="people-outline" slot="start"></ion-icon>
+        <ion-label>Usuarios</ion-label>
+      </ion-item>
+    </div>
+
+
     <div class="logout-section">
       <a href="#" (click)="logout()" class="logout-link">Cerrar cuenta</a>
     </div>
   </div>
+</ion-content>
 
-
-<ion-tabs>
+<ion-footer>
   <ion-tab-bar slot="bottom">
-    <ion-tab-button tab="home" [routerLink]="['/menu']" >
+    <ion-tab-button tab="home" [routerLink]="['/menu']">
       <ion-icon name="pizza"></ion-icon>
       Menu
     </ion-tab-button>
@@ -68,12 +85,13 @@
     </ion-tab-button>
     <ion-tab-button tab="receipt">
       <ion-icon name="receipt-outline"></ion-icon>
-      pedidos
+      Pedidos
     </ion-tab-button>
-    <ion-tab-button tab="profile" [routerLink]="['/login']">
+    <ion-tab-button tab="profile" [routerLink]="['/profile']">
       <ion-icon name="person-outline"></ion-icon>
       Perfil
-  </ion-tab-button>
+    </ion-tab-button>
   </ion-tab-bar>
-</ion-tabs>
-</ion-content>
+</ion-footer>
+
+

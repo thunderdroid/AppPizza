@@ -150,6 +150,8 @@ export class LocationModalComponent implements AfterViewInit {
       this.addressService.saveAddress(this.searchQuery); // Guardar dirección si el checkbox está marcado
     }
     this.modalController.dismiss(this.searchQuery); // Devuelve la dirección seleccionada
+    this.addressService.setSelectedAddress(this.searchQuery); // Establece la dirección seleccionada en el servicio
+    this.modalController.dismiss(this.searchQuery); // Devuelve la dirección seleccionada al modal
   }
 
   isWebPlatform(): boolean {

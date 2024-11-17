@@ -135,26 +135,25 @@
       </ion-col>
     </ion-row>
   </ion-grid>
-  <ion-tabs>
-    <ion-tab-bar slot="bottom">
-      <ion-tab-button tab="home" [routerLink]="['/menu']">
-        <ion-icon name="pizza"></ion-icon>
-        Menu
-      </ion-tab-button>
-      <ion-tab-button tab="cart">
-        <ion-icon name="cart-outline"></ion-icon>
-        Carrito
-      </ion-tab-button>
-      <ion-tab-button tab="receipt">
-        <ion-icon name="receipt-outline"></ion-icon>
-        pedidos
-      </ion-tab-button>
-      <ion-tab-button tab="profile" [routerLink]="['/profile']">
-        <ion-icon name="person-outline"></ion-icon>
-        Perfil
-      </ion-tab-button>
-    </ion-tab-bar>
-  </ion-tabs>
-  
 </ion-content>
+<ion-footer>
+  <ion-tab-bar slot="bottom">
+    <ion-tab-button tab="home" [routerLink]="['/menu']">
+      <ion-icon name="pizza"></ion-icon>
+      Menu
+    </ion-tab-button>
+    <ion-tab-button tab="cart">
+      <ion-icon name="cart-outline"></ion-icon>
+      Carrito
+    </ion-tab-button>
+    <ion-tab-button tab="receipt">
+      <ion-icon name="receipt-outline"></ion-icon>
+      Pedidos
+    </ion-tab-button>
+    <ion-tab-button tab="profile" [routerLink]="['/profile']">
+      <ion-icon name="person-outline"></ion-icon>
+      Perfil
+    </ion-tab-button>
+  </ion-tab-bar>
+</ion-footer>
 

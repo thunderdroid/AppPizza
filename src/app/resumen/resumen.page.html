@@ -1,0 +1,69 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Resumen de Compra</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <!-- Direcciones -->
+  <ion-list>
+    <ion-item-divider class="section-divider">
+      <ion-label class="section-title">Dirección de Entrega</ion-label>
+    </ion-item-divider>
+
+    <ion-item class="separator-item">
+      <ion-icon name="location-outline" slot="start"></ion-icon>
+      <ion-label>{{ deliveryAddress }}</ion-label>
+    </ion-item>
+  </ion-list>
+
+  <!-- Métodos de pago -->
+  <ion-list>
+    <ion-item-divider class="section-divider">
+      <ion-label class="section-title">Método de Pago</ion-label> 
+    </ion-item-divider>
+    
+    <ion-item class="separator-item">
+      <ion-label>Transbank</ion-label>
+      <!-- Aquí puedes agregar un componente de selección de método de pago si es necesario -->
+    </ion-item>
+  </ion-list>
+
+  <!-- Productos -->
+  <ion-list>
+    <ion-item-divider class="section-divider">
+      <ion-label class="section-title">Tus Productos</ion-label>
+    </ion-item-divider>
+
+    <ion-item class="separator-item" (click)="openCartModal()">
+      <ion-label>
+        <div class="circle">{{ cartItems.length }}</div> <!-- Cantidad de productos -->
+      </ion-label>
+    </ion-item>
+  </ion-list>
+
+  <!-- Resumen de Pedido -->
+  <ion-list>
+    <ion-item-divider class="section-divider">
+      <ion-label class="section-title">Resumen</ion-label>
+    </ion-item-divider>
+
+    <ion-item class="separator-item">
+      <ion-label>Subtotal: ${{ subtotal }}</ion-label>
+    </ion-item>
+
+    <ion-item class="separator-item">
+      <ion-label>Delivery: {{ deliveryCost | currency }}</ion-label>
+    </ion-item>
+
+    <ion-item class="separator-item">
+      <ion-label>Total: ${{ totalCost | currency }}</ion-label>
+    </ion-item>
+  </ion-list>
+</ion-content>
+
+<ion-footer>
+  <ion-button expand="full" color="primary" (click)="confirmOrder()">
+    Confirmar Pedido - ${{ totalCost | currency }}
+  </ion-button>
+</ion-footer>

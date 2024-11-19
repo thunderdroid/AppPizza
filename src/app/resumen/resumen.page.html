@@ -13,7 +13,14 @@
 
     <ion-item class="separator-item">
       <ion-icon name="location-outline" slot="start"></ion-icon>
-      <ion-label>{{ deliveryAddress }}</ion-label>
+      <ion-label (click)="openLocationModal()">
+        {{ deliveryAddress || 'Necesitas agregar una dirección' }}
+      </ion-label>
+    </ion-item>
+
+    <!-- Mensaje de error si no hay dirección -->
+    <ion-item *ngIf="!deliveryAddress" lines="none">
+      <ion-text color="danger">Por favor, selecciona una dirección.</ion-text>
     </ion-item>
   </ion-list>
 
@@ -23,9 +30,13 @@
       <ion-label class="section-title">Método de Pago</ion-label> 
     </ion-item-divider>
     
-    <ion-item class="separator-item">
-      <ion-label>Transbank</ion-label>
-      <!-- Aquí puedes agregar un componente de selección de método de pago si es necesario -->
+    <ion-item class="separator-item" (click)="openPaymentMethodsModal()">
+      <ion-label>
+        <div *ngIf="selectedPaymentLogo; else defaultText">
+          <img [src]="selectedPaymentLogo" alt="Logo método de pago" class="payment-logo" />
+        </div>
+        <ng-template #defaultText>{{ selectedPaymentMethod || 'Selecciona un método de pago' }}</ng-template>
+      </ion-label>
     </ion-item>
   </ion-list>
 
@@ -63,7 +74,7 @@
 </ion-content>
 
 <ion-footer>
-  <ion-button expand="full" color="primary" (click)="confirmOrder()">
+  <ion-button expand="full" color="primary" (click)="confirmOrder()" [disabled]="!deliveryAddress|| !selectedPaymentMethod">
     Confirmar Pedido - ${{ totalCost | currency }}
   </ion-button>
 </ion-footer>

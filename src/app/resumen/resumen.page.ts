@@ -2,7 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { NavController } from '@ionic/angular';
 import { ModalController } from '@ionic/angular';
 import { CartModalComponent } from '../cart-modal/cart-modal.component';
+import { LocationModalComponent } from '../location-modal/location-modal.component';
 import { AddressService } from '../services/address.service';
+import { PaymentMethodsComponent } from '../modals/payment-methods/payment-methods.component';
+import { AngularFirestore } from '@angular/fire/compat/firestore';
+import { v4 as uuidv4 } from 'uuid';  // Para generar ID aleatorias
 
 // Definir la interfaz para los elementos del carrito
 interface CartItem {
@@ -18,7 +22,8 @@ interface CartItem {
   styleUrls: ['./resumen.page.scss'],
 })
 export class ResumenPage implements OnInit {
-
+  selectedPaymentMethod: string = '';
+  selectedPaymentLogo: string = '';  // Almacena la ruta del logo
   cartItems: CartItem[] = [];  // Lista de productos en el carrito con el tipo CartItem
   deliveryCost: number = 0;  // Costo de delivery
   subtotal: number = 0;  // Subtotal de la compra
@@ -29,6 +34,7 @@ export class ResumenPage implements OnInit {
     private navController: NavController,
     private modalController: ModalController,
     private addressService: AddressService,
+    private firestore: AngularFirestore 
   ) {
     // Obtener los datos pasados desde la página anterior (carrito)
     const navigation = history.state;
@@ -48,6 +54,39 @@ export class ResumenPage implements OnInit {
   ngOnInit() {
     this.deliveryAddress = this.addressService.getSelectedAddress();
   }
+
+  async openPaymentMethodsModal() {
+    const modal = await this.modalController.create({
+      component: PaymentMethodsComponent
+    });
+
+     // Espera a que el modal se cierre y obtenga el método de pago seleccionado
+     modal.onDidDismiss().then((result) => {
+      if (result.data && result.data.selectedMethod) {
+        this.selectedPaymentMethod = result.data.selectedMethod;
+        this.selectedPaymentLogo = result.data.logo;
+      }
+    });
+    return await modal.present();
+  }
+
+  
+
+  // Método para abrir el modal de ubicación
+  async openLocationModal() {
+    const modal = await this.modalController.create({
+      component: LocationModalComponent,
+    });
+
+    // Esperar el cierre del modal y recibir la dirección seleccionada
+    modal.onDidDismiss().then((data) => {
+      if (data.data) {
+        this.deliveryAddress = data.data; // Cargar la dirección seleccionada
+      }
+    });
+
+    return await modal.present();
+  }
   
 
   // Función para abrir el modal del carrito
@@ -58,6 +97,8 @@ export class ResumenPage implements OnInit {
     });
     await modal.present();
   }
+
+
 
   // Función para calcular el total
   calculateTotal() {
@@ -80,9 +121,10 @@ export class ResumenPage implements OnInit {
   // Función para confirmar el pedido
   confirmOrder() {
     // Lógica para confirmar el pedido
-    alert(`Pedido confirmado! Total: $${this.totalCost}`);
-    // Redirigir a la página de confirmación, pago o lo que sea necesario
-    this.navController.navigateForward('/confirmation');  // Ejemplo de navegación
   }
+
+  
+
+  
 }
 

@@ -61,3 +61,8 @@ ion-label {
     --color: #333 !important; /* Asegura que los textos dentro de los labels sean de color oscuro */
     background-color: transparent; /* Fondo transparente explícito */
 }
+
+ion-text[color="danger"] {
+    font-size: 0.9em;
+    margin-left: 10px;
+  }

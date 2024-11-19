@@ -21,7 +21,6 @@ export class LocationModalComponent implements AfterViewInit {
 
   constructor(private modalController: ModalController, private addressService: AddressService) {}
 
-  // Inicializa Google Maps cuando el modal se carga
   ngAfterViewInit() {
     this.initMap();
   }
@@ -31,34 +30,37 @@ export class LocationModalComponent implements AfterViewInit {
   }
 
   async getCurrentLocation() {
-    if (this.isWebPlatform()) {
-      if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(
-          (position) => {
-            const lat = position.coords.latitude;
-            const lng = position.coords.longitude;
-            this.setMapPosition(lat, lng);
-            this.reverseGeocode(lat, lng); // Obtener la dirección actual y actualizar la sugerencia
-          },
-          (error) => {
-            console.error('Error al obtener la ubicación:', error);
-          }
-        );
+    try {
+      if (this.isWebPlatform()) {
+        if (navigator.geolocation) {
+          navigator.geolocation.getCurrentPosition(
+            (position) => {
+              const lat = position.coords.latitude;
+              const lng = position.coords.longitude;
+              this.setMapPosition(lat, lng);
+              this.reverseGeocode(lat, lng); // Obtener la dirección actual
+            },
+            (error) => {
+              console.error('Error al obtener la ubicación:', error);
+            }
+          );
+        } else {
+          console.error('Geolocalización no soportada en este navegador.');
+        }
       } else {
-        console.error('Geolocalización no soportada en este navegador.');
+        const permission = await Geolocation.requestPermissions();
+        if (permission.location === 'granted') {
+          const coordinates = await Geolocation.getCurrentPosition();
+          const lat = coordinates.coords.latitude;
+          const lng = coordinates.coords.longitude;
+          this.setMapPosition(lat, lng);
+          this.reverseGeocode(lat, lng); // Obtener la dirección actual
+        } else {
+          console.error('Permisos de ubicación no concedidos');
+        }
       }
-    } else {
-      const permission = await Geolocation.requestPermissions();
-
-      if (permission.location === 'granted') {
-        const coordinates = await Geolocation.getCurrentPosition();
-        const lat = coordinates.coords.latitude;
-        const lng = coordinates.coords.longitude;
-        this.setMapPosition(lat, lng);
-        this.reverseGeocode(lat, lng); // Obtener la dirección actual y actualizar la sugerencia
-      } else {
-        console.error('Permisos de ubicación no concedidos');
-      }
+    } catch (error) {
+      console.error('Error al obtener la ubicación:', error);
     }
   }
 
@@ -71,11 +73,12 @@ export class LocationModalComponent implements AfterViewInit {
         this.currentAddress = results[0].formatted_address; // Almacenar la dirección obtenida
         this.searchQuery = this.currentAddress; // Actualiza el campo de búsqueda
         this.suggestions.unshift({ description: this.currentAddress });
+      } else {
+        console.error('Error al obtener la dirección:', status);
       }
     });
   }
 
-  // Inicializa el mapa 
   initMap() {
     const defaultLatLng = { lat: -33.4489, lng: -70.6693 }; // Coordenadas predeterminadas para Santiago, Chile
     this.map = new google.maps.Map(document.getElementById('map'), {
@@ -83,7 +86,6 @@ export class LocationModalComponent implements AfterViewInit {
       zoom: 14,
     });
 
-    // Agrega un marcador cuando el usuario selecciona una ubicación
     this.map.addListener('click', (event: any) => {
       const clickedLocation = event.latLng;
       if (this.marker) {
@@ -98,7 +100,6 @@ export class LocationModalComponent implements AfterViewInit {
     });
   }
 
-  // Cambia la posición del mapa y del marcador
   setMapPosition(lat: number, lng: number) {
     const latLng = new google.maps.LatLng(lat, lng);
     this.map.setCenter(latLng);
@@ -132,29 +133,28 @@ export class LocationModalComponent implements AfterViewInit {
   }
 
   selectSuggestion(suggestion: any) {
-    // Obtener detalles de la ubicación seleccionada
     const placesService = new google.maps.places.PlacesService(this.map);
     placesService.getDetails({ placeId: suggestion.place_id }, (place: any, status: any) => {
       if (status === google.maps.places.PlacesServiceStatus.OK) {
         const lat = place.geometry.location.lat();
         const lng = place.geometry.location.lng();
-        this.setMapPosition(lat, lng); // Actualiza el mapa y marcador
-        this.searchQuery = place.formatted_address; // Muestra la dirección en el campo de búsqueda
-        this.suggestions = []; // Limpia las sugerencias
+        this.setMapPosition(lat, lng);
+        this.searchQuery = place.formatted_address;
+        this.suggestions = [];
       }
     });
   }
 
   useSelectedAddress() {
     if (this.saveAddress) {
-      this.addressService.saveAddress(this.searchQuery); // Guardar dirección si el checkbox está marcado
+      this.addressService.saveAddress(this.searchQuery); // Guardar dirección
     }
-    this.modalController.dismiss(this.searchQuery); // Devuelve la dirección seleccionada
-    this.addressService.setSelectedAddress(this.searchQuery); // Establece la dirección seleccionada en el servicio
-    this.modalController.dismiss(this.searchQuery); // Devuelve la dirección seleccionada al modal
+    this.addressService.setSelectedAddress(this.searchQuery); // Establecer dirección seleccionada
+    this.modalController.dismiss(this.searchQuery); // Devolver la dirección seleccionada
   }
 
   isWebPlatform(): boolean {
     return !((window as any).Capacitor && (window as any).Capacitor.isNativePlatform());
   }
 }
+

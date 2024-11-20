@@ -6,7 +6,7 @@ import { LocationModalComponent } from '../location-modal/location-modal.compone
 import { AddressService } from '../services/address.service';
 import { PaymentMethodsComponent } from '../modals/payment-methods/payment-methods.component';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
-import { v4 as uuidv4 } from 'uuid';  // Para generar ID aleatorias
+import { HttpClient } from '@angular/common/http'; // Importación necesaria para Transbank
 
 // Definir la interfaz para los elementos del carrito
 interface CartItem {
@@ -23,20 +23,20 @@ interface CartItem {
 })
 export class ResumenPage implements OnInit {
   selectedPaymentMethod: string = '';
-  selectedPaymentLogo: string = '';  // Almacena la ruta del logo
-  cartItems: CartItem[] = [];  // Lista de productos en el carrito con el tipo CartItem
-  deliveryCost: number = 0;  // Costo de delivery
-  subtotal: number = 0;  // Subtotal de la compra
-  totalCost: number = 0;  // Total final incluyendo delivery
+  selectedPaymentLogo: string = ''; // Almacena la ruta del logo
+  cartItems: CartItem[] = []; // Lista de productos en el carrito con el tipo CartItem
+  deliveryCost: number = 0; // Costo de delivery
+  subtotal: number = 0; // Subtotal de la compra
+  totalCost: number = 0; // Total final incluyendo delivery
   deliveryAddress: string = ''; // Dirección de entrega seleccionada
 
   constructor(
     private navController: NavController,
     private modalController: ModalController,
     private addressService: AddressService,
-    private firestore: AngularFirestore 
+    private firestore: AngularFirestore, // Firestore importado
+    private http: HttpClient // Importación del HttpClient para solicitudes HTTP
   ) {
-    // Obtener los datos pasados desde la página anterior (carrito)
     const navigation = history.state;
     if (navigation) {
       this.cartItems = navigation.cartItems || [];
@@ -44,24 +44,43 @@ export class ResumenPage implements OnInit {
       this.deliveryCost = navigation.deliveryCost || 0;
       this.totalCost = navigation.totalCost || 0;
     } else {
-      // Si no se pasa nada, se cargan los datos del localStorage
       this.cartItems = JSON.parse(localStorage.getItem('cartItems') || '[]');
     }
 
-    this.calculateTotal();  // Calcular total cuando se cargan los datos
+    this.calculateTotal();
   }
 
   ngOnInit() {
+    // Obtener la dirección seleccionada del servicio de direcciones
     this.deliveryAddress = this.addressService.getSelectedAddress();
+
+    // Verificar si existe un token_ws en los parámetros de la URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const token = urlParams.get('token_ws');
+
+    if (token) {
+      // Confirmar la transacción con el token
+      this.http
+        .post('http://localhost:3000/commit-transaction', { token })
+        .subscribe(
+          (response: any) => {
+            console.log('Transacción confirmada:', response);
+            // Aquí puedes redirigir a una página de éxito o mostrar el resumen
+            this.navController.navigateForward('/success'); // Cambiar la ruta según corresponda
+          },
+          (error) => {
+            console.error('Error al confirmar la transacción:', error);
+          }
+        );
+    }
   }
 
   async openPaymentMethodsModal() {
     const modal = await this.modalController.create({
-      component: PaymentMethodsComponent
+      component: PaymentMethodsComponent,
     });
 
-     // Espera a que el modal se cierre y obtenga el método de pago seleccionado
-     modal.onDidDismiss().then((result) => {
+    modal.onDidDismiss().then((result) => {
       if (result.data && result.data.selectedMethod) {
         this.selectedPaymentMethod = result.data.selectedMethod;
         this.selectedPaymentLogo = result.data.logo;
@@ -70,15 +89,11 @@ export class ResumenPage implements OnInit {
     return await modal.present();
   }
 
-  
-
-  // Método para abrir el modal de ubicación
   async openLocationModal() {
     const modal = await this.modalController.create({
       component: LocationModalComponent,
     });
 
-    // Esperar el cierre del modal y recibir la dirección seleccionada
     modal.onDidDismiss().then((data) => {
       if (data.data) {
         this.deliveryAddress = data.data; // Cargar la dirección seleccionada
@@ -87,44 +102,77 @@ export class ResumenPage implements OnInit {
 
     return await modal.present();
   }
-  
 
-  // Función para abrir el modal del carrito
   async openCartModal() {
     const modal = await this.modalController.create({
-      component: CartModalComponent,  // Asegúrate de que el componente del modal esté correctamente configurado
-      componentProps: { cartItems: this.cartItems }  // Pasar los items del carrito como props al modal
+      component: CartModalComponent, 
+      componentProps: { cartItems: this.cartItems }, 
     });
     await modal.present();
   }
 
-
-
-  // Función para calcular el total
   calculateTotal() {
-    // Si no se ha calculado previamente el subtotal, lo calculamos ahora
     if (this.subtotal === 0) {
-      this.subtotal = this.cartItems.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+      this.subtotal = this.cartItems.reduce(
+        (sum, item) => sum + item.price * item.quantity,
+        0
+      );
     }
 
-    // Si el subtotal es mayor o igual a $26.000, el delivery es gratis
     if (this.subtotal >= 26000) {
       this.deliveryCost = 0;
     } else {
-      this.deliveryCost = 2990; // Costo de delivery si el subtotal es menor
+      this.deliveryCost = 2990;
     }
 
-    // Calcula el total
     this.totalCost = this.subtotal + this.deliveryCost;
   }
 
-  // Función para confirmar el pedido
-  confirmOrder() {
-    // Lógica para confirmar el pedido
+  async confirmOrder() {
+    const buyOrder = `ORDER_${new Date().getTime()}`;
+    const sessionId = `SESSION_${new Date().getTime()}`;
+    const returnUrl = 'http://localhost:8100/success'; 
+
+    // Guardar el pedido en Firestore
+    const order = {
+      buyOrder,
+      sessionId,
+      totalCost: this.totalCost,
+      deliveryAddress: this.deliveryAddress,
+      cartItems: this.cartItems,
+      paymentMethod: this.selectedPaymentMethod,
+      paymentLogo: this.selectedPaymentLogo,
+      status: 'Pending', 
+      timestamp: new Date(),
+    };
+
+    try {
+      // Guardar en la colección de pedidos de Firestore
+      const orderRef = await this.firestore.collection('orders').add(order);
+      console.log('Pedido guardado en Firestore con ID:', orderRef.id);
+
+      // Crear la transacción
+      this.http
+        .post('http://localhost:3000/create-transaction', {
+          amount: this.totalCost,
+          buyOrder,
+          sessionId,
+          returnUrl,
+        })
+        .subscribe(
+          (response: any) => {
+            // Guardar el ID del pedido en el almacenamiento local o pasarlo a la página de éxito
+            localStorage.setItem('orderId', buyOrder);
+            // Redirigir al formulario de pago de Transbank
+            window.location.href = response.url + '?token_ws=' + response.token;
+          },
+          (error) => {
+            console.error('Error al crear la transacción:', error);
+          }
+        );
+    } catch (error) {
+      console.error('Error al guardar el pedido en Firestore:', error);
+    }
   }
-
-  
-
-  
 }
 

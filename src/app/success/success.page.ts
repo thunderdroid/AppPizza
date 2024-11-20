@@ -14,11 +14,14 @@ export class SuccessPage implements OnInit {
   constructor(private navController: NavController) { }
 
   ngOnInit() {
-     // Obtener el ID del pedido desde el estado de la navegación
-     const navigation = history.state;
-     if (navigation && navigation.orderId) {
-       this.orderId = navigation.orderId;
-     }
+     // Obtener el ID del pedido del almacenamiento local
+  const orderId = localStorage.getItem('orderId');
+
+  if (orderId) {
+    this.orderId = orderId;
+  } else {
+    console.error('ID del pedido no encontrado.');
+  }
   }
 
    // Función para navegar a la página principal

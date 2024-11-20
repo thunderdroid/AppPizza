@@ -4,6 +4,9 @@ import { RouteReuseStrategy } from '@angular/router';
 
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 import { FormsModule } from '@angular/forms'; // Importa FormsModule
+import { provideHttpClient } from '@angular/common/http'; // Nueva importación
+
+
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
@@ -20,8 +23,8 @@ import { environment } from '../environments/environment';
 
 @NgModule({
   declarations: [AppComponent,  LocationModalComponent, CartModalComponent, PaymentMethodsComponent ],
-  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule,   AngularFireModule.initializeApp(environment.firebaseConfig), AngularFireAuthModule, AngularFirestoreModule,  FormsModule],
-  providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
+  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule,   AngularFireModule.initializeApp(environment.firebaseConfig), AngularFireAuthModule, AngularFirestoreModule,  FormsModule,],
+  providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy },  provideHttpClient()],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

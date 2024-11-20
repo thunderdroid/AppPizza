@@ -1,7 +1,7 @@
+/// <reference types="google.maps" />
 import { Component, AfterViewInit } from '@angular/core';
 import { GoogleMap } from '@capacitor/google-maps';
 import { NavController } from '@ionic/angular'; // Asegúrate de importar NavController
-
 @Component({
   selector: 'app-encuentranos',
   templateUrl: './encuentranos.page.html',

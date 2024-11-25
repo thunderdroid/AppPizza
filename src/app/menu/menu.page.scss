@@ -1,10 +1,12 @@
 ion-content {
   overflow-y: auto;
-  --background: #fff; /* Asegúrate de que el fondo sea blanco */
+  --background: #fff;
+  height: 100%; /* Asegurarse de que el contenido ocupe todo el alto disponible */
 }
 
 ion-tabs {
-  height: 240%;
+  position: fixed;
+  bottom: 0;
 }
 
 ion-tab-bar {
@@ -12,14 +14,14 @@ ion-tab-bar {
   bottom: 0;
   width: 100%;
   z-index: 10;
-  --background: #fff; /* Fondo blanco para el tab bar */
+  --background: #fff;
   --color: #000;
   --color-selected: #f90101;
   --border-color: #ccc;
 }
 
 ion-tab-button {
-  --background: #fff; /* Fondo blanco para los botones del tab */
+  --background: #fff;
   --color: #000;
 }
 
@@ -35,8 +37,12 @@ ion-card {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  height: 100%;
-  z-index: 1; 
+  height: 100%; /* Asegurarse de que las tarjetas tengan una altura flexible */
+  z-index: 1;
+}
+
+ion-grid {
+  margin-bottom: 50px; /* Para evitar que el contenido se oculte detrás del footer */
 }
 
 ion-card-content {
@@ -67,51 +73,31 @@ p {
   text-align: center;
 }
 
+ion-footer {
+  padding: 0;
+  margin: 0;
+}
+
 @media (min-width: 576px) {
   ion-card {
-    max-width: 250px;
-    margin: 10px;
+      max-width: 250px;
+      margin: 10px;
   }
 }
 
 @media (min-width: 768px) {
   ion-card {
-    max-width: 220px;
-    height: auto;
+      max-width: 220px;
+      height: auto;
   }
 
   ion-img {
-    height: 180px;
+      height: 180px;
   }
 }
 
-
-/* Reglas para pantallas más grandes */
-@media (min-width: 768px) {
-  ion-card {
-    max-width: 400px; /* Ancho máximo en pantallas más grandes */
-  }
-
-  ion-img {
-    height: 180px; /* Altura de la imagen para pantallas más grandes */
-  }
-}
-
-@media (min-width: 576px) {
-  ion-card {
-    max-width: 250px; /* Ancho máximo en pantallas más pequeñas */
-    margin: 10px;
-  }
-}
-
-
-
-
-
-
-/* Nuevas reglas agregadas */
 ion-toolbar {
-  --background: rgb(9, 95, 19); /* Cambiar el fondo a blanco */
+  --background: rgb(9, 95, 19); /* Cambiar el fondo a verde */
   height: 80px; /* Aumentar la altura del toolbar */
 }
 
@@ -136,6 +122,5 @@ ion-button {
   width: 150px; /* Limitar el ancho máximo de la dirección */
   white-space: nowrap; /* Evitar que el texto se divida en varias líneas */
   overflow: hidden; /* Ocultar el desbordamiento del texto */
-  text-overflow: ellipsis; 
+  text-overflow: ellipsis;
 }
-

@@ -1,14 +1,12 @@
 ion-content {
     overflow-y: auto;
     --background: #fff;
+    height: 100%; /* Asegurarse de que el contenido ocupe todo el alto disponible */
 }
 
 ion-tabs {
-    height: 148%;
-
-
-
-
+    position: fixed;
+    bottom: 0;
 }
 
 ion-tab-bar {
@@ -20,22 +18,15 @@ ion-tab-bar {
     --color: #000;
     --color-selected: #f90101;
     --border-color: #ccc;
-
 }
-
 
 ion-tab-button {
     --background: #fff;
     --color: #000;
-
 }
-
-
-
 
 ion-icon {
     color: #000;
-
 }
 
 ion-card {
@@ -46,9 +37,12 @@ ion-card {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    height: 100%;
-    z-index: 1; 
+    height: 100%; /* Asegurarse de que las tarjetas tengan una altura flexible */
+    z-index: 1;
+}
 
+ion-grid {
+    margin-bottom: 50px; /* Para evitar que el contenido se oculte detrás del footer */
 }
 
 ion-card-content {
@@ -56,7 +50,6 @@ ion-card-content {
     flex-direction: column;
     align-items: center;
     padding: 10px;
-
 }
 
 ion-img {
@@ -65,7 +58,6 @@ ion-img {
     border-radius: 8px;
     margin-bottom: 10px;
     object-fit: cover;
-
 }
 
 h2 {
@@ -81,11 +73,15 @@ p {
     text-align: center;
 }
 
+ion-footer {
+    padding: 0;
+    margin: 0;
+}
+
 @media (min-width: 576px) {
     ion-card {
         max-width: 250px;
         margin: 10px;
-
     }
 }
 
@@ -93,35 +89,32 @@ p {
     ion-card {
         max-width: 220px;
         height: auto;
-
     }
 
     ion-img {
         height: 180px;
-
     }
 }
 
-
 ion-toolbar {
-    --background: rgb(9, 95, 19); /* Cambiar el fondo a blanco */
+    --background: rgb(9, 95, 19); /* Cambiar el fondo a verde */
     height: 80px; /* Aumentar la altura del toolbar */
-  }
-  
-  ion-title {
+}
+
+ion-title {
     display: flex;
     flex-direction: column;
     align-items: center; /* Centrar contenido */
     font-size: 1.2rem;
     line-height: 1.1;
     margin: 0; /* Eliminar márgenes adicionales */
-  }
-  
-  ion-button {
+}
+
+ion-button {
     --padding-start: 0;
-  }
-  
-  .location-text {
+}
+
+.location-text {
     font-size: 1rem;
     color: black; /* Cambiar color del texto a negro */
     text-align: left;
@@ -129,5 +122,5 @@ ion-toolbar {
     width: 150px; /* Limitar el ancho máximo de la dirección */
     white-space: nowrap; /* Evitar que el texto se divida en varias líneas */
     overflow: hidden; /* Ocultar el desbordamiento del texto */
-    text-overflow: ellipsis; 
-  }
+    text-overflow: ellipsis;
+}

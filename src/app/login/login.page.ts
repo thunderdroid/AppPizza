@@ -90,4 +90,8 @@ export class LoginPage implements OnInit {
     await this.showLoading();
     this.router.navigate(['/menu']); // Redirigir al menú
   }
+
+  navigateToResetPassword() {
+    this.router.navigate(['/reset-password']);
+  }
 }

@@ -22,7 +22,7 @@
 
   <ion-item>
     <ion-label>Categoría</ion-label>
-    <ion-select [(ngModel)]="categoria">
+    <ion-select [(ngModel)]="categoria" (ionChange)="cambiarCategoria()">
       <ion-select-option value="pizzas">Pizzas</ion-select-option>
       <ion-select-option value="bebidas">Bebidas</ion-select-option>
       <ion-select-option value="acompañamientos">Acompañamientos</ion-select-option>

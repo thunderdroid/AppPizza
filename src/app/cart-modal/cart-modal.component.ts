@@ -1,16 +1,18 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { CartService } from '../services/cart.service';
 import { AddressService } from '../services/address.service';
 import { NavController } from '@ionic/angular';
+import { Subscription } from 'rxjs';  // Importamos Subscription
 
 @Component({
   selector: 'app-cart-modal',
   templateUrl: './cart-modal.component.html',
   styleUrls: ['./cart-modal.component.scss'],
 })
-export class CartModalComponent implements OnInit {
+export class CartModalComponent implements OnInit, OnDestroy {
   cartItems: any[] = [];
+  private cartItemsSubscription!: Subscription;
 
   constructor(
     private modalController: ModalController,
@@ -20,16 +22,26 @@ export class CartModalComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.loadCartItems();
+    // Nos suscribimos al observable de cartItems
+    this.cartItemsSubscription = this.cartService.getCartItems().subscribe(items => {
+      this.cartItems = items;
+    });
+  }
+
+  ngOnDestroy() {
+    // Nos desuscribimos cuando el componente se destruye
+    if (this.cartItemsSubscription) {
+      this.cartItemsSubscription.unsubscribe();
+    }
   }
 
   ionViewWillEnter() {
     this.loadCartItems();
   }
 
-  // Cargar los productos del carrito
+  // Cargar los productos del carrito (esto ya lo manejamos con la suscripción)
   private loadCartItems() {
-    this.cartItems = this.cartService.getCartItems();
+    // Este método ya no es necesario, ya que la suscripción maneja la carga del carrito
   }
 
   // Aumentar la cantidad de un producto
@@ -76,8 +88,4 @@ export class CartModalComponent implements OnInit {
     });
     this.closeCart(); // Cerrar el modal después de redirigir
   }
-
-  
 }
-
-

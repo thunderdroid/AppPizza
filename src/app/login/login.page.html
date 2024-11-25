@@ -37,7 +37,7 @@
       <div class="action-buttons ion-padding">
         <ion-button class="login-button" size="large" type="submit">INICIAR SESIÓN</ion-button>
         <ion-button class="invited-button" size="large" (click)="continueAsGuest()">CONTINUAR COMO INVITADO</ion-button>
-        <p>Olvidaste tu Contraseña?</p>
+        <p (click)="navigateToResetPassword()">Olvidaste tu Contraseña?</p>
         <ion-button class="signup-button" size="large" fill="outline" [routerLink]="['/signup']">REGISTRARSE</ion-button>
       </div>
     </form>

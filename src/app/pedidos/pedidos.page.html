@@ -5,6 +5,14 @@
 </ion-header>
 
 <ion-content>
+<!-- Mensaje cuando no hay pedidos -->
+<div *ngIf="orders.length === 0" class="empty-message">
+  <ion-text color="medium">
+    <h3>Aún no has hecho ningún pedido.</h3>
+    <p>¡Explora nuestro menú y haz tu primer pedido!</p>
+  </ion-text>
+</div>
+
   <ion-card *ngFor="let order of orders">  <!-- Iterar sobre todos los pedidos -->
     <ion-card-header>
       <ion-card-title>Pedido #{{ order.buyOrder }}</ion-card-title>
@@ -31,5 +39,26 @@
     </ion-card-content>
   </ion-card>
 </ion-content>
+
+<ion-footer>
+  <ion-tab-bar slot="bottom">
+    <ion-tab-button tab="home" [routerLink]="['/menu']">
+      <ion-icon name="pizza"></ion-icon>
+      Menu
+    </ion-tab-button>
+    <ion-tab-button tab="cart">
+      <ion-icon name="cart-outline"></ion-icon>
+      Carrito
+    </ion-tab-button>
+    <ion-tab-button tab="receipt" [routerLink]="['/pedidos']">
+      <ion-icon name="receipt-outline"></ion-icon>
+      Pedidos
+    </ion-tab-button>
+    <ion-tab-button tab="profile" [routerLink]="['/profile']">
+      <ion-icon name="person-outline"></ion-icon>
+      Perfil
+    </ion-tab-button>
+  </ion-tab-bar>
+</ion-footer>
 
 

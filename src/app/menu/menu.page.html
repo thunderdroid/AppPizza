@@ -9,7 +9,8 @@
       </ion-buttons>
       <ion-buttons slot="end">
         <ion-button (click)="openCartModal()">
-          <ion-icon name="cart-outline"></ion-icon> 
+          <ion-icon name="cart-outline"></ion-icon>
+          <ion-badge *ngIf="cartItemCount > 0" color="danger">{{ cartItemCount }}</ion-badge> <!-- Muestra el contador --> 
         </ion-button>
       </ion-buttons>
     </ion-toolbar>
@@ -142,8 +143,9 @@
       <ion-icon name="pizza"></ion-icon>
       Menu
     </ion-tab-button>
-    <ion-tab-button tab="cart">
+    <ion-tab-button tab="cart" (click)="openCartModal()">
       <ion-icon name="cart-outline"></ion-icon>
+      <ion-badge *ngIf="cartItemCount > 0" color="danger">{{ cartItemCount }}</ion-badge> 
       Carrito
     </ion-tab-button>
     <ion-tab-button tab="receipt" [routerLink]="['/pedidos']">

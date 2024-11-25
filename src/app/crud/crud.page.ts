@@ -30,27 +30,33 @@ export class CrudPage implements OnInit {
     };
 
     this.productsservice.agregarProducto(nuevoProducto).then(() => {
+      // Recargar los productos de la categoría seleccionada
       this.cargarProductos();
       this.limpiarCampos();
+    }).catch(error => {
+      console.error('Error al agregar producto', error);
     });
   }
 
   // Cargar productos por categoría
   cargarProductos() {
+    // Llamar al servicio para obtener los productos filtrados por categoría
     this.productsservice.obtenerProductos(this.categoria).subscribe((productos) => {
-      // Agregar el id del documento a cada producto
       this.productos = productos.map((producto: any) => {
-        return { ...producto, id: producto.id }; // Añadir el id
+        return { ...producto, id: producto.id }; // Asegurarse de que el id esté presente
       });
+    }, (error) => {
+      console.error('Error al cargar productos', error);
     });
   }
 
   // Eliminar un producto
   eliminarProducto(id: string) {
     this.productsservice.eliminarProducto(id).then(() => {
-      this.cargarProductos(); // Recargar productos después de la eliminación
+      // Recargar los productos de la categoría seleccionada después de eliminar
+      this.cargarProductos();
     }).catch(error => {
-      console.error("Error al eliminar el producto:", error);
+      console.error('Error al eliminar producto', error);
     });
   }
 
@@ -61,4 +67,10 @@ export class CrudPage implements OnInit {
     this.imagen = '';
     this.categoria = 'pizzas'; // Resetear la categoría a 'pizzas'
   }
+
+  // Cambiar la categoría y recargar productos
+  cambiarCategoria() {
+    this.cargarProductos(); // Cargar los productos de la nueva categoría seleccionada
+  }
 }
+

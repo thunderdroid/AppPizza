@@ -7,8 +7,9 @@ import { AddressService } from '../services/address.service';
 import { PaymentMethodsComponent } from '../modals/payment-methods/payment-methods.component';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { HttpClient } from '@angular/common/http'; // Importación necesaria para Transbank
+import { AngularFireAuth } from '@angular/fire/compat/auth'; // Importación de AngularFireAuth para obtener el userId
 
-// Definir la interfaz para los elementos del carrito
+
 interface CartItem {
   name: string;
   image: string;
@@ -29,13 +30,15 @@ export class ResumenPage implements OnInit {
   subtotal: number = 0; // Subtotal de la compra
   totalCost: number = 0; // Total final incluyendo delivery
   deliveryAddress: string = ''; // Dirección de entrega seleccionada
+  userId: string | null = null; // Almacena el userId del usuario autenticado
 
   constructor(
     private navController: NavController,
     private modalController: ModalController,
     private addressService: AddressService,
-    private firestore: AngularFirestore, // Firestore importado
-    private http: HttpClient // Importación del HttpClient para solicitudes HTTP
+    private firestore: AngularFirestore,
+    private afAuth: AngularFireAuth, // Servicio de autenticación
+    private http: HttpClient
   ) {
     const navigation = history.state;
     if (navigation) {
@@ -51,6 +54,13 @@ export class ResumenPage implements OnInit {
   }
 
   ngOnInit() {
+    // Obtener el userId del usuario autenticado
+    this.afAuth.authState.subscribe((user) => {
+      if (user) {
+        this.userId = user.uid; // Guardar el userId
+      }
+    });
+
     // Obtener la dirección seleccionada del servicio de direcciones
     this.deliveryAddress = this.addressService.getSelectedAddress();
 
@@ -65,13 +75,65 @@ export class ResumenPage implements OnInit {
         .subscribe(
           (response: any) => {
             console.log('Transacción confirmada:', response);
-            // Aquí puedes redirigir a una página de éxito o mostrar el resumen
             this.navController.navigateForward('/success'); // Cambiar la ruta según corresponda
           },
           (error) => {
             console.error('Error al confirmar la transacción:', error);
           }
         );
+    }
+  }
+
+  async confirmOrder() {
+    if (!this.userId) {
+      console.error('Error: Usuario no autenticado.');
+      return;
+    }
+
+    const buyOrder = `ORDER_${new Date().getTime()}`;
+    const sessionId = `SESSION_${new Date().getTime()}`;
+    const returnUrl = 'http://localhost:8100/success';
+
+    // Guardar el pedido en Firestore
+    const order = {
+      buyOrder,
+      sessionId,
+      totalCost: this.totalCost,
+      deliveryAddress: this.deliveryAddress,
+      cartItems: this.cartItems,
+      paymentMethod: this.selectedPaymentMethod,
+      paymentLogo: this.selectedPaymentLogo,
+      status: 'Pending',
+      timestamp: new Date(),
+      userId: this.userId, // Agregar el userId al objeto del pedido
+    };
+
+    try {
+      // Guardar en la colección de pedidos de Firestore
+      const orderRef = await this.firestore.collection('orders').add(order);
+      console.log('Pedido guardado en Firestore con ID:', orderRef.id);
+
+      // Crear la transacción
+      this.http
+        .post('http://localhost:3000/create-transaction', {
+          amount: this.totalCost,
+          buyOrder,
+          sessionId,
+          returnUrl,
+        })
+        .subscribe(
+          (response: any) => {
+            // Guardar el ID del pedido en el almacenamiento local o pasarlo a la página de éxito
+            localStorage.setItem('orderId', buyOrder);
+            // Redirigir al formulario de pago de Transbank
+            window.location.href = response.url + '?token_ws=' + response.token;
+          },
+          (error) => {
+            console.error('Error al crear la transacción:', error);
+          }
+        );
+    } catch (error) {
+      console.error('Error al guardar el pedido en Firestore:', error);
     }
   }
 
@@ -105,8 +167,8 @@ export class ResumenPage implements OnInit {
 
   async openCartModal() {
     const modal = await this.modalController.create({
-      component: CartModalComponent, 
-      componentProps: { cartItems: this.cartItems }, 
+      component: CartModalComponent,
+      componentProps: { cartItems: this.cartItems },
     });
     await modal.present();
   }
@@ -127,52 +189,7 @@ export class ResumenPage implements OnInit {
 
     this.totalCost = this.subtotal + this.deliveryCost;
   }
-
-  async confirmOrder() {
-    const buyOrder = `ORDER_${new Date().getTime()}`;
-    const sessionId = `SESSION_${new Date().getTime()}`;
-    const returnUrl = 'http://localhost:8100/success'; 
-
-    // Guardar el pedido en Firestore
-    const order = {
-      buyOrder,
-      sessionId,
-      totalCost: this.totalCost,
-      deliveryAddress: this.deliveryAddress,
-      cartItems: this.cartItems,
-      paymentMethod: this.selectedPaymentMethod,
-      paymentLogo: this.selectedPaymentLogo,
-      status: 'Pending', 
-      timestamp: new Date(),
-    };
-
-    try {
-      // Guardar en la colección de pedidos de Firestore
-      const orderRef = await this.firestore.collection('orders').add(order);
-      console.log('Pedido guardado en Firestore con ID:', orderRef.id);
-
-      // Crear la transacción
-      this.http
-        .post('http://localhost:3000/create-transaction', {
-          amount: this.totalCost,
-          buyOrder,
-          sessionId,
-          returnUrl,
-        })
-        .subscribe(
-          (response: any) => {
-            // Guardar el ID del pedido en el almacenamiento local o pasarlo a la página de éxito
-            localStorage.setItem('orderId', buyOrder);
-            // Redirigir al formulario de pago de Transbank
-            window.location.href = response.url + '?token_ws=' + response.token;
-          },
-          (error) => {
-            console.error('Error al crear la transacción:', error);
-          }
-        );
-    } catch (error) {
-      console.error('Error al guardar el pedido en Firestore:', error);
-    }
+  goBack() {
+    this.navController.pop(); // Navega a la página anterior
   }
 }
-

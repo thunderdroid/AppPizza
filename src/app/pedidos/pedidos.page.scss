@@ -1,123 +1,125 @@
 ion-content {
-    --background: rgba(255, 255, 255, 0.811);
-    backdrop-filter: blur(10px);
-  }
+  --background: #ffffff; /* Fondo blanco */
+}
 
-  
-  ion-toolbar{
-    color: green;
-  }
+/* Estilo del ion-toolbar */
+ion-toolbar {
+  --background: #ffffff; /* Fondo blanco */
+  --color: #000000; /* Texto negro */
+}
 
-  ion-card {
-    background-color: #ffffff; /* Fondo blanco para la card */
-    color: #000000; /* Texto en negro para la card */
-    box-shadow: none; /* Opcional: Eliminar sombra para un estilo más limpio */
-  }
-  
-  ion-card-header {
-    background-color: #ffffff; /* Fondo blanco para el header de la card */
-    color: #000000; /* Texto en negro para el header */
-  }
-  
-  ion-card-title, ion-card-subtitle {
-    color: #000000; /* Asegurarse que el título y el subtítulo sean en negro */
-  }
-  
-  ion-card-content {
-    background-color: #ffffff; /* Fondo blanco para el contenido de la card */
-  }
-  
-  ion-label {
-    color: #fffcfc; /* Texto negro para los ion-label */
-    
-  }
-  
-  ion-list {
-  background-color: #ffffff; /* Fondo blanco para la lista */
+/* Estilo para ion-cards */
+ion-card {
+  background-color: #090909; /* Fondo blanco */
+  color: #000000; /* Texto negro */
+  box-shadow: none; /* Sin sombra */
+  border-radius: 10px; /* Bordes redondeados */
+  margin: 10px; /* Separación entre cards */
+}
+
+ion-card-header {
+  background-color: #ffffff; /* Fondo blanco */
+  color: #000000; /* Texto negro */
+}
+
+ion-card-title,
+ion-card-subtitle {
+  color: #000000; /* Texto negro */
+}
+
+/* Estilo del contenido dentro de las cards */
+ion-card-content {
+  background-color: #ffffff;
+  color: #000000; /* Texto negro */
+}
+
+/* Estilo para las listas dentro de las cards */
+ion-list {
+  background-color: #ffffff; /* Fondo blanco */
   padding: 0; /* Eliminar padding predeterminado */
 }
 
 ion-item {
-  background-color: #ffffff; /* Fondo blanco para cada item */
-  color: #f7f2f2; /* Texto negro */
-  padding: 10px 15px; /* Opcional: agrega padding para mayor espacio */
-  border-bottom: 1px solid #e0e0e0; /* Línea divisoria entre items */
+  --background:#ffffff
+  color: #000000; /* Texto negro */
+  padding: 10px 15px; /* Espaciado interno */
+  border-bottom: 1px solid #e0e0e0; /* Línea divisoria */
+  color: #000000;
 }
 
-ion-avatar {
-  background-color: #ffffff; /* Fondo blanco para el avatar */
-}
-
+/* Ajustes de ion-avatar */
 ion-avatar img {
-  border-radius: 50%; /* Borde redondeado para las imágenes */
-  width: 40px; /* Tamaño de la imagen */
-  height: 40px; /* Tamaño de la imagen */
+  border-radius: 50%; /* Imagen redondeada */
+  width: 40px;
+  height: 40px;
 }
 
+/* Estilo para etiquetas ion-label */
+ion-label {
+  color: #000000; /* Texto negro */
+}
 
 ion-label h2 {
-  font-size: 16px; /* Tamaño del nombre del producto */
-  font-weight: bold; /* Negrita para el nombre */
+  font-size: 16px;
+  font-weight: bold;
 }
 
 ion-label p {
-  font-size: 14px; /* Tamaño del texto para la cantidad y el precio */
+  font-size: 14px;
+  margin: 0;
 }
 
-  
-
-  ion-tabs {
-    position: fixed;
-    bottom: 0;
-  }
-  
-  ion-tab-bar {
-    position: fixed;
-    bottom: 0;
-    width: 100%;
-    z-index: 10;
-    --background: #fff;
-    --color: #000;
-    --color-selected: #f90101;
-    --border-color: #ccc;
-  }
-  
-  ion-tab-button {
-    --background: #fff;
-    --color: #000;
-  }
-
-  ion-footer {
-    padding: 0;
-    margin: 0;
-  }
-
-  .empty-message {
-  display: flex; /* Flexbox para centrar */
-  flex-direction: column; /* Apilar los elementos verticalmente */
-  align-items: center; /* Alinear horizontalmente al centro */
-  justify-content: center; /* Ajustar el contenido verticalmente */
-  text-align: center; /* Centrar el texto */
-  margin: 40% auto; /* Espaciado hacia abajo desde la parte superior */
-  max-width: 90%; /* Limitar el ancho máximo */
-  padding: 1.5rem; /* Agregar un espacio interno */
-  background: rgb(250, 248, 248); /* Fondo translúcido similar al de ion-content */
-  backdrop-filter: blur(10px); /* Mismo efecto de difuminado */
-  border-radius: 10px; /* Bordes redondeados */
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra para destacar el mensaje */
+/* Estilo para mensajes vacíos */
+.empty-message {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  margin: 20% auto; /* Centrado vertical */
+  max-width: 90%;
+  padding: 1.5rem;
+  background: #ffffff; /* Fondo blanco */
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 .empty-message h3 {
-  font-size: 1.4rem; /* Tamaño de fuente para el título */
-  color: #333; /* Color del texto */
-  margin-bottom: 0.5rem; /* Espaciado inferior */
+  font-size: 1.4rem;
+  color: #000000; /* Texto negro */
+  margin-bottom: 0.5rem;
 }
 
 .empty-message p {
-  font-size: 1rem; /* Tamaño de fuente para el texto */
-  color: #161515; /* Color del texto secundario */
-  margin: 0; /* Sin márgenes extra */
+  font-size: 1rem;
+  color: #000000; /* Texto negro */
+  margin: 0;
 }
 
-  
-  
+/* Estilo del tab-bar */
+ion-tab-bar {
+  --background: #ffffff; /* Fondo blanco */
+  --color: #000000; /* Iconos en negro */
+  --color-selected: #f90101; /* Icono seleccionado en rojo */
+  --border-color: #ccc; /* Línea superior */
+}
+
+/* Responsividad para pantallas móviles */
+@media (max-width: 480px) {
+  ion-card {
+    margin: 5px;
+  }
+
+  ion-label h2 {
+    font-size: 14px; /* Texto más pequeño */
+  }
+
+  ion-label p {
+    font-size: 12px;
+  }
+
+  .empty-message {
+    margin: 30% auto; /* Ajustar margen en pantallas pequeñas */
+    padding: 1rem;
+  }
+}

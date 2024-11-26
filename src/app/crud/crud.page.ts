@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ProductsService } from '../services/products.service'; // Asegúrate de importar el servicio de productos
+import { ProductsService } from '../services/products.service';
 
 @Component({
   selector: 'app-crud',
@@ -12,6 +12,7 @@ export class CrudPage implements OnInit {
   imagen: string = '';
   categoria: string = 'pizzas'; // Por defecto, pizzas
   productos: any[] = [];
+  productoEditadoId: string | null = null; // Para rastrear el producto que estamos editando
 
   constructor(private productsservice: ProductsService) {}
 
@@ -40,7 +41,6 @@ export class CrudPage implements OnInit {
 
   // Cargar productos por categoría
   cargarProductos() {
-    // Llamar al servicio para obtener los productos filtrados por categoría
     this.productsservice.obtenerProductos(this.categoria).subscribe((productos) => {
       this.productos = productos.map((producto: any) => {
         return { ...producto, id: producto.id }; // Asegurarse de que el id esté presente
@@ -72,5 +72,35 @@ export class CrudPage implements OnInit {
   cambiarCategoria() {
     this.cargarProductos(); // Cargar los productos de la nueva categoría seleccionada
   }
-}
 
+  // Editar un producto
+  editarProducto(producto: any) {
+    this.productoEditadoId = producto.id;
+    this.nombre = producto.nombre;
+    this.precio = producto.precio;
+    this.imagen = producto.imagen;
+    this.categoria = producto.categoria;
+  }
+
+  // Guardar los cambios de edición
+  guardarEdicion() {
+    if (this.productoEditadoId) {
+      const productoActualizado = {
+        nombre: this.nombre,
+        precio: this.precio,
+        imagen: this.imagen,
+        categoria: this.categoria,
+      };
+
+      this.productsservice.actualizarProducto(this.productoEditadoId, productoActualizado).then(() => {
+        this.cargarProductos();
+        this.limpiarCampos();
+        this.productoEditadoId = null; // Resetear el id del producto editado
+      }).catch(error => {
+        console.error('Error al actualizar producto', error);
+      });
+    }
+  }
+
+  
+}

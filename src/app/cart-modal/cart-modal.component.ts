@@ -1,9 +1,10 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ModalController } from '@ionic/angular';
+import { ModalController, AlertController } from '@ionic/angular'; // Importa AlertController
 import { CartService } from '../services/cart.service';
 import { AddressService } from '../services/address.service';
+import { AuthService } from '../services/auth.service'; // Servicio de autenticación
 import { NavController } from '@ionic/angular';
-import { Subscription } from 'rxjs';  // Importamos Subscription
+import { Subscription } from 'rxjs'; // Importamos Subscription
 
 @Component({
   selector: 'app-cart-modal',
@@ -13,53 +14,48 @@ import { Subscription } from 'rxjs';  // Importamos Subscription
 export class CartModalComponent implements OnInit, OnDestroy {
   cartItems: any[] = [];
   private cartItemsSubscription!: Subscription;
+  userId: string | null = null; // Variable para almacenar el uid del usuario
 
   constructor(
     private modalController: ModalController,
     private cartService: CartService,
     private addressService: AddressService,
+    private authService: AuthService, // Inyecta el servicio de autenticación
+    private alertController: AlertController, // Inyecta AlertController
     private navController: NavController
   ) {}
 
   ngOnInit() {
-    // Nos suscribimos al observable de cartItems
+    // Suscribirse a los cambios del carrito
     this.cartItemsSubscription = this.cartService.getCartItems().subscribe(items => {
       this.cartItems = items;
+    });
+
+    // Obtener el UID del usuario autenticado
+    this.authService.getCurrentUser().subscribe(user => {
+      this.userId = user?.uid || null; // Guarda el uid o null si no hay usuario
     });
   }
 
   ngOnDestroy() {
-    // Nos desuscribimos cuando el componente se destruye
     if (this.cartItemsSubscription) {
       this.cartItemsSubscription.unsubscribe();
     }
   }
 
-  ionViewWillEnter() {
-    this.loadCartItems();
-  }
-
-  // Cargar los productos del carrito (esto ya lo manejamos con la suscripción)
-  private loadCartItems() {
-    // Este método ya no es necesario, ya que la suscripción maneja la carga del carrito
-  }
-
   // Aumentar la cantidad de un producto
   increaseQuantity(index: number) {
     this.cartService.increaseQuantity(index);
-    this.loadCartItems(); // Recargar el carrito para reflejar los cambios
   }
 
   // Disminuir la cantidad de un producto
   decreaseQuantity(index: number) {
     this.cartService.decreaseQuantity(index);
-    this.loadCartItems(); // Recargar el carrito para reflejar los cambios
   }
 
   // Eliminar un producto del carrito
   removeItem(index: number) {
     this.cartService.removeItem(index);
-    this.loadCartItems(); // Recargar el carrito después de eliminar el producto
   }
 
   // Obtener el total del carrito
@@ -72,20 +68,46 @@ export class CartModalComponent implements OnInit, OnDestroy {
     this.modalController.dismiss();
   }
 
-  // Función placeholder para el botón "Ir al Pago"
-  goToPayment() {
-    const total = this.getTotal();
-    const deliveryCost = total >= 26000 ? 0 : 2990; // Si el total es mayor a 26,000, el envío es gratis
-    const subtotal = total + deliveryCost;
-    // Redirigir al resumen de compra y pasar los datos
-    this.navController.navigateForward('/resumen', {
-      state: { 
-        cartItems: this.cartItems,
-        subtotal: subtotal,
-        deliveryCost: deliveryCost,
-        totalCost: total + deliveryCost,
-      }
-    });
-    this.closeCart(); // Cerrar el modal después de redirigir
+  // Ir al pago con verificación de usuario autenticado
+  async goToPayment() {
+    if (this.userId) {
+      // Usuario autenticado
+      const total = this.getTotal();
+      const deliveryCost = total >= 26000 ? 0 : 2990;
+      const subtotal = total + deliveryCost;
+
+      this.navController.navigateForward('/resumen', {
+        state: { 
+          cartItems: this.cartItems,
+          subtotal: subtotal,
+          deliveryCost: deliveryCost,
+          totalCost: total + deliveryCost,
+        }
+      });
+
+      this.closeCart(); // Cierra el modal después de redirigir
+    } else {
+      // Mostrar alerta si no está autenticado
+      const alert = await this.alertController.create({
+        header: 'Debes iniciar sesión',
+        message: 'Inicia sesión para continuar con tu compra.',
+        buttons: [
+          {
+            text: 'Cancelar',
+            role: 'cancel',
+            cssClass: 'secondary',
+          },
+          {
+            text: 'Iniciar Sesión',
+            handler: () => {
+              this.closeCart(); // Cierra el modal antes de redirigir
+              this.navController.navigateForward('/login'); // Redirige al login
+            },
+          },
+        ],
+      });
+
+      await alert.present();
+    }
   }
 }

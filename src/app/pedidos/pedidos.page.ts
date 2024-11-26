@@ -5,11 +5,11 @@ import { AngularFireAuth } from '@angular/fire/compat/auth';
 // Definir la interfaz para los pedidos
 interface Order {
   buyOrder: string;
-  timestamp: any; // O el tipo adecuado según tu base de datos
-  cartItems: any[]; // O puedes especificar un tipo más concreto para los productos
+  timestamp: any; 
+  cartItems: any[]; 
   totalCost: number;
-  orderDate?: string; // Fecha que vamos a agregar
-  userId?: string; // Identificador del usuario que hizo el pedido
+  orderDate?: string; 
+  userId?: string; 
 }
 
 @Component({

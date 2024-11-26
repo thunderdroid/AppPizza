@@ -14,21 +14,20 @@
         </ion-button>
       </ion-buttons>
     </ion-toolbar>
+    <ion-toolbar>
+      <ion-segment  (ionChange)="onSegmentChange($event)">
+        <ion-segment-button value="pizzas">
+          Pizzas
+        </ion-segment-button>
+        <ion-segment-button value="bebidas">
+          Bebidas
+        </ion-segment-button>
+        <ion-segment-button value="acompanamientos">
+          Acompañamientos
+        </ion-segment-button>
+      </ion-segment>
+    </ion-toolbar>
   </ion-header>
-
-  <ion-toolbar>
-    <ion-segment (ionChange)="onSegmentChange($event)">
-      <ion-segment-button value="pizzas">
-        Pizzas
-      </ion-segment-button>
-      <ion-segment-button value="bebidas">
-        Bebidas
-      </ion-segment-button>
-      <ion-segment-button value="acompanamientos">
-        Acompañamientos
-      </ion-segment-button>
-    </ion-segment>
-  </ion-toolbar>
   <ion-grid>
     <ion-row>
       <ion-col size="6">

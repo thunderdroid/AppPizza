@@ -1,5 +1,8 @@
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
+import { Observable } from 'rxjs';
+import firebase from 'firebase/compat/app';
+
 
 @Injectable({
   providedIn: 'root',
@@ -35,5 +38,16 @@ export class AuthService {
   clearStoredUser() {
     localStorage.removeItem('userEmail');
     localStorage.removeItem('userPassword');
+  }
+
+    // Obtener el usuario actual
+  getCurrentUser(): Observable<firebase.User | null> {
+    return this.afAuth.authState; // Devuelve el estado de autenticación actual como observable
+  }
+
+  // Verificar si el usuario está autenticado
+  async isAuthenticated(): Promise<boolean> {
+    const user = await this.afAuth.currentUser;
+    return !!user; // Devuelve true si hay un usuario autenticado
   }
 }

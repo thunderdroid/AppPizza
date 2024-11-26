@@ -1,24 +1,40 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { ModalController } from '@ionic/angular';
 import { LocationModalComponent } from '../location-modal/location-modal.component'; // Asegúrate de que la ruta sea correcta
 import { CartModalComponent } from '../cart-modal/cart-modal.component';
 import { CartService } from '../services/cart.service';
 import { ProductsService } from '../services/products.service'; // Asegúrate de importar el servicio de productos
+import { Subscription } from 'rxjs'; 
+
 
 @Component({
   selector: 'app-bebidas',
   templateUrl: './bebidas.page.html',
   styleUrls: ['./bebidas.page.scss'],
 })
-export class BebidasPage implements OnInit {
+export class BebidasPage implements OnInit, OnDestroy {
   selectedAddress: string = 'Agregar dirección'; // Valor inicial del título
   productos: any[] = [];  // Usamos un array simple sin un modelo definido
+  cartItemCount: number = 0; // Contador de productos en el carrito
+  private cartItemsSubscription!: Subscription; // Suscripción para manejar el contador del carrito
 
   constructor(private router: Router, private modalController: ModalController, private cartService: CartService, private productsService: ProductsService ) { }
 
   ngOnInit() {
     this.cargarProductos('bebidas');
+
+     // Nos suscribimos al carrito para obtener el contador de productos en tiempo real
+     this.cartItemsSubscription = this.cartService.getCartItems().subscribe(() => {
+      this.cartItemCount = this.cartService.getCartItemCount(); // Actualizamos el contador de productos
+    });
+  }
+
+  ngOnDestroy() {
+    // Nos desuscribimos cuando el componente se destruya
+    if (this.cartItemsSubscription) {
+      this.cartItemsSubscription.unsubscribe();
+    }
   }
 
   cargarProductos(categoria: string) {
@@ -74,5 +90,10 @@ export class BebidasPage implements OnInit {
       componentProps: { cartItems: this.cartService.getCartItems() },
     });
     await modal.present();
+  }
+
+   // Método para actualizar el conteo de productos en el carrito
+   updateCartItemCount() {
+    this.cartItemCount = this.cartService.getCartItemCount();
   }
 }

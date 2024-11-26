@@ -4,6 +4,25 @@ ion-content {
     height: 100%; /* Asegurarse de que el contenido ocupe todo el alto disponible */
 }
 
+ion-header,
+ion-toolbar {
+  position: sticky;
+  top: 0;
+}
+
+ion-segment {
+    display: flex;
+    justify-content: space-between; /* Distribuye los botones uniformemente */
+    overflow-x: auto; /* Habilita scroll si es necesario */
+  }
+  
+  ion-segment-button {
+    flex: 0 0 auto; /* Los botones toman solo el espacio necesario */
+    padding: 0 10px; /* Añade algo de espacio lateral para el texto */
+    white-space: nowrap; /* Evita que el texto se divida en varias líneas */
+    text-align: center; /* Centra el texto dentro del botón */
+  }
+
 ion-tabs {
     position: fixed;
     bottom: 0;
@@ -99,6 +118,7 @@ ion-footer {
 ion-toolbar {
     --background: rgb(9, 95, 19); /* Cambiar el fondo a verde */
     height: 80px; /* Aumentar la altura del toolbar */
+    
 }
 
 ion-title {

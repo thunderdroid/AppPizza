@@ -31,9 +31,13 @@
 
   <ion-button expand="full" (click)="agregarProducto()">Agregar Producto</ion-button>
 
+  <!-- Botón para guardar cambios cuando se edita un producto -->
+  <ion-button expand="full" *ngIf="productoEditadoId" (click)="guardarEdicion()">Guardar Cambios</ion-button>
+
   <ion-list>
     <ion-item *ngFor="let producto of productos">
       <ion-label>{{ producto.nombre }} - ${{ producto.precio }}</ion-label>
+      <ion-button fill="clear" (click)="editarProducto(producto)">Editar</ion-button>
       <ion-button fill="clear" (click)="eliminarProducto(producto.id)">Eliminar</ion-button>
     </ion-item>
   </ion-list>
